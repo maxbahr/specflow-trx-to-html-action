@@ -58,7 +58,7 @@ jobs:
         uses: ./
         with:
           trxDirPath: './trx'
-          attachmentDirPath: './attachments'
+          attachmentsDirPath: './attachments'
           outputHtmlPath: 'output/results.html'
 
       - name: Print Output
