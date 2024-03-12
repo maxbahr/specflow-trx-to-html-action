@@ -34,8 +34,7 @@ extends:
   - plugin:github/recommended
   - plugin:jest/recommended
 
-rules:
-  {
+rules: {
     'camelcase': 'off',
     'eslint-comments/no-use': 'off',
     'eslint-comments/no-unused-disable': 'off',
