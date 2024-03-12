@@ -1,23 +1,27 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Specflow Trx to Html Report
+description: |
+  Parse specflow dotnet trx files and generate html report with gherkin steps and attachments
+author: 'Maksymilian Bahr <maks.bahr@gmail.com>'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: file-text
+  color: green
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
+  trxDirPath:
+    description: Specifies the directory path where your test result files (.trx files) are located. Test result files are generated typically by dotnet testing frameworks.
+    required: false
+    default: './trx'
 
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  attachmentsDirPath:
+    description: Indicates the directory path where any attachments related to the test results are stored. Attachments might include screenshots, log files, or any other supplementary materials.
+    required: false
+    default: './attachments'
+
+  outputHtmlPath:
+    description: Specifies the file path for the HTML file that will be generated as a result of processing the test results.
+    required: false
+    default: 'output/result.html'
 
 runs:
   using: node20

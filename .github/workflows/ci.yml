@@ -57,7 +57,9 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          trxDirPath: './trx'
+          attachmentDirPath: './attachments'
+          outputHtmlPath: 'output/results.html'
 
       - name: Print Output
         id: output

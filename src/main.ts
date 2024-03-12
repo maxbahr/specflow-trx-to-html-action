@@ -1,5 +1,10 @@
 import * as core from '@actions/core'
 import { wait } from './wait'
+import { FileUtils } from './fs-utils.class.js'
+import { HtmlGenerator } from './html-generator.class.js'
+import { ISummaryResult } from './interfaces/summary-result.type.js'
+import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
+import { TestResultPreparing } from './test-result-preparing.class.js'
 
 /**
  * The main function for the action.
@@ -7,18 +12,31 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    //Inputs
+    const trxDirPath = core.getInput('trxDirPath') || './trx';
+    const attachmentDirPath = core.getInput('attachmentsDirPath') || './attachments';
+    const outputHtmlPath = core.getInput('outputHtmlPath') || 'output/result.html';
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const templatePath = './src/templates/template.html'
+        const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath)
+    const attachmentFiles =
+      await FileUtils.findAttachmentFilesAsync(attachmentDirPath)
+    const unitTestResults: IUnitTestResult[] =
+      await TestResultPreparing.prepareUnitTestResult(trxFiles, attachmentFiles)
+    const summaryDomainResult: ISummaryResult[] =
+      TestResultPreparing.prepareDomainSummaryResult(unitTestResults)
+    const summaryResult: ISummaryResult = TestResultPreparing.prepareSummaryResult(
+      unitTestResults,
+      summaryDomainResult
+    )
+    let htmlContent = HtmlGenerator.generateHTML(
+      summaryResult,
+      summaryDomainResult,
+      unitTestResults,
+      templatePath
+    )
+    HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, true)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)

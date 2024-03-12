@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="41ac5ef7-5dd5-4019-906d-1541c199077d" name="@runner 2024-03-12 05:13:24" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2024-03-12T05:13:24.1597343+00:00" queuing="2024-03-12T05:13:24.1597344+00:00" start="2024-03-12T05:12:10.7544238+00:00" finish="2024-03-12T05:16:45.9327168+00:00" />
+  <TestSettings name="default" id="e65fadee-c33f-421b-80da-2e542f314e54">
+    <Deployment runDeploymentRoot="_runner_2024-03-12_05_13_24" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c6e04a0d-a356-48c0-831e-bf9ae4d0649b" testId="f3f5623c-d2b4-b906-907c-16405bc94284" testName="Sign Up" computerName="runner" duration="00:03:21.5568664" startTime="2024-03-12T05:16:45.6765826+00:00" endTime="2024-03-12T05:16:45.6765829+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c6e04a0d-a356-48c0-831e-bf9ae4d0649b">
+      <Output>
+        <StdOut>-&gt; Screen Resolution: 1920 x 1080
+Given application is open
+-&gt; DRIVER: Navigated to https://app.com/
+-&gt; Application successfully launched
+-&gt; done: SignInSignUpSteps.GivenApplicationIsOpen() (1.0s)
+Then sign in page is displayed
+-&gt; done: SignInSignUpSteps.SignInPageIsDisplayed() (4.8s)
+When sign up button is clicked on sign in page
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #createAccount
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #createAccount
+-&gt; DRIVER: Clicked &lt;a&gt; text='SIGN UP' value='' data-testid='' type='' id='createAccount' name='' class='btn btn-outline-primary w-100 sign-up-button' 
+-&gt; done: SignInSignUpSteps.SignUpButtonIsClickedOnSignInPage() (0.6s)
+Then page subheader 'Accept Terms of Use.' is displayed
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: .header-container :nth-child(2)
+-&gt; done: SignInSignUpSteps.PageSubHeaderIsDisplayed("Accept Terms of Use.") (0.5s)
+When terms of use are read on sign up page
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #tou_container p
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #tou_container p
+-&gt; DRIVER: Clicked &lt;p&gt; text='Version 1.1, Modified 16 July 2020' value='' data-testid='' type='' id='' name='' class='' 
+-&gt; done: SignInSignUpSteps.TermOfUseAreReadOnSignUpPage() (0.5s)
+Then submit button 'Accept &amp; Continue' is enabled
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; done: SignInSignUpSteps.ThenSubmitButtonIsDisabled("Accept &amp; Continue", "enabled") (1.0s)
+When submit button 'Accept &amp; Continue' is clicked
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; DRIVER: Clicked &lt;button&gt; text='ACCEPT AND CONTINUE' value='' data-testid='' type='submit' id='continue' name='' class='btn btn-primary' 
+-&gt; done: SignInSignUpSteps.WhenSubmitButtonIsClicked("Accept &amp; Continue") (0.3s)
+Then page subheader 'Accept Privacy Policy.' is displayed
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: .header-container :nth-child(2)
+-&gt; done: SignInSignUpSteps.PageSubHeaderIsDisplayed("Accept Privacy Po...") (1.1s)
+When privacy policy is read on sign up page
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #pp_container p
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #pp_container p
+-&gt; DRIVER: Clicked &lt;p&gt; text='Version 1.1, Modified 16 July 2020' value='' data-testid='' type='' id='' name='' class='' 
+-&gt; done: SignInSignUpSteps.PrivacyPolicyIsReadOnSignUpPage() (0.4s)
+Then submit button 'Accept &amp; Continue' is enabled
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; done: SignInSignUpSteps.ThenSubmitButtonIsDisabled("Accept &amp; Continue", "enabled") (1.0s)
+When submit button 'Accept &amp; Continue' is clicked
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=continue]
+-&gt; DRIVER: Clicked &lt;button&gt; text='ACCEPT AND CONTINUE' value='' data-testid='' type='submit' id='continue' name='' class='btn btn-primary' 
+-&gt; done: SignInSignUpSteps.WhenSubmitButtonIsClicked("Accept &amp; Continue") (0.3s)
+Then page subheader 'Please enter your email. We will send a verification code to your email inbox.' is displayed
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: .header-container :nth-child(2)
+-&gt; done: SignInSignUpSteps.PageSubHeaderIsDisplayed("Please enter your...") (1.1s)
+Then submit button 'Send Code' is disabled
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id*=send_code]
+-&gt; done: SignInSignUpSteps.ThenSubmitButtonIsDisabled("Send Code", "disabled") (1.0s)
+When email is verified on sign up page
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #email
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #email
+-&gt; DRIVER: Changed value from '' to 'trx@gmail.com'
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id$=send_code]
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [id$=send_code]
+-&gt; DRIVER: Clicked &lt;button&gt; text='SEND CODE' value='' data-testid='' type='button' id='emailVerificationControlOnSignUp_but_send_code' name='' class='sendCode btn btn-primary' 
+-&gt; error: There is no email with Verify your Email Address after 3/12/2024 5:13:38 AM (187.2s)
+Then submit button 'Verify Code' is enabled
+-&gt; skipped because of previous errors
+When submit button 'Verify Code' is clicked
+-&gt; skipped because of previous errors
+Then page subheader 'Please enter your information.' is displayed
+-&gt; skipped because of previous errors
+Then submit button 'Continue' is disabled
+-&gt; skipped because of previous errors
+When personal data values are entered:
+  --- table step argument ---
+  | key       | value    |
+  | FirstName | {TEXT}60 |
+  | LastName  | {TEXT}60 |
+-&gt; skipped because of previous errors
+Then submit button 'Continue' is enabled
+-&gt; skipped because of previous errors
+When submit button 'Continue' is clicked
+-&gt; skipped because of previous errors
+Then page subheader 'Please create your password.' is displayed
+-&gt; skipped because of previous errors
+Then submit button 'Create password' is disabled
+-&gt; skipped because of previous errors
+When password is entered on sign up page
+-&gt; skipped because of previous errors
+Then submit button 'Create account' is enabled
+-&gt; skipped because of previous errors
+When submit button 'Create account' is clicked
+-&gt; skipped because of previous errors
+Then sign in page is displayed
+-&gt; skipped because of previous errors
+When new user is signed in
+-&gt; skipped because of previous errors
+Then welcome page is displayed
+-&gt; skipped because of previous errors
+Then text 'Welcome to {AppSettings}ApplicationName! Follow these quick steps to create your account.' in 'Welcome Title' component is displayed
+-&gt; skipped because of previous errors
+-&gt; Attachment '/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png' added (not forwarded to the test runner).</StdOut>
+        <ErrorInfo>
+          <Message>System.Exception : There is no email with Verify your Email Address after 3/12/2024 5:13:38 AM</Message>
+          <StackTrace>   at Common.Azure.B2C.AzureEmailVerificationService.GetMessageText</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1f8d646f-792f-499b-9fc3-0b3225bb7d45" testId="e9e9cfd1-a7ad-b87c-11ce-a511407fda4a" testName="Sign In and Sign out" computerName="runner" duration="00:01:12.3014952" startTime="2024-03-12T05:13:24.1124051+00:00" endTime="2024-03-12T05:13:24.1124242+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1f8d646f-792f-499b-9fc3-0b3225bb7d45">
+      <Output>
+        <StdOut>-&gt; Screen Resolution: 1920 x 1080
+Given owner user is signed in
+-&gt; done: TestSteps.GivenOwnerUserIsSignedIn("", "in") (11.0s)
+Given application is open
+-&gt; DRIVER: Navigated to https://app.com/?orgId=12bc
+-&gt; Application successfully launched in context of organization 12bc
+-&gt; done: SignInSignUpSteps.GivenApplicationIsOpen() (1.5s)
+Then sign in page is displayed
+-&gt; done: SignInSignUpSteps.SignInPageIsDisplayed() (4.8s)
+When owner is signed in
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #signInName
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #signInName
+-&gt; DRIVER: Changed value from '' to 'trx@gmail.com'
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #password
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: #password
+-&gt; DRIVER: Changed value from '' to '**********'
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [type=submit]
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [type=submit]
+-&gt; DRIVER: Clicked &lt;button&gt; text='LOG IN' value='' data-testid='' type='submit' id='next' name='' class='btn btn-primary' 
+-&gt; done: SignInSignUpSteps.UserIsSignedIn("owner") (3.0s)
+Then home page is displayed
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [class*=appContainer]
+-&gt; done: NavigationBarSteps.ThenPageIsDisplayed("home") (1.5s)
+When 'Locations' on navigation bar is clicked
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [class$=appContent]
+-&gt; DRIVER: Finding By css selector: [data-testdevice]
+-&gt; done: NavigationBarSteps.WhenOnNavigationBarIsClicked("Locations") (4.1s)
+Then locations page is displayed
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [class*=appContainer]
+-&gt; done: NavigationBarSteps.ThenPageIsDisplayed("locations") (0.0s)
+When 'Sign Out' on navigation bar is clicked
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [class$=appContent]
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [data-testid='side-nav-menu']
+-&gt; DRIVER: Finding By css selector: [class*=loader]
+-&gt; DRIVER: Finding By css selector: [data-testid^='nav-link--']
+-&gt; done: NavigationBarSteps.WhenOnNavigationBarIsClicked("Sign Out") (3.7s)
+Then sign in page is displayed
+-&gt; done: SignInSignUpSteps.SignInPageIsDisplayed() (4.9s)
+</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Sign In and Sign out" storage="/ui.tests.dll" id="e9e9cfd1-a7ad-b87c-11ce-a511407fda4a">
+      <Execution id="1f8d646f-792f-499b-9fc3-0b3225bb7d45" />
+      <TestMethod codeBase="/UI.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="B2C.B2C_SignInAndSignUpFeature" name="SignInAndSignOut" />
+    </UnitTest>
+    <UnitTest name="Sign Up" storage="/ui.tests.dll" id="f3f5623c-d2b4-b906-907c-16405bc94284">
+      <Execution id="c6e04a0d-a356-48c0-831e-bf9ae4d0649b" />
+      <TestMethod codeBase="/UI.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="B2C.B2C_SignInAndSignUpFeature" name="SignUp" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="f3f5623c-d2b4-b906-907c-16405bc94284" executionId="c6e04a0d-a356-48c0-831e-bf9ae4d0649b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e9e9cfd1-a7ad-b87c-11ce-a511407fda4a" executionId="1f8d646f-792f-499b-9fc3-0b3225bb7d45" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut></StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="runner" outcome="Error" timestamp="2024-03-12T05:16:45.6730533+00:00">
+        <Text>[xUnit.net 00:04:34.56]     Sign Up [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>
