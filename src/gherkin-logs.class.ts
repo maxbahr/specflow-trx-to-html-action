@@ -1,11 +1,11 @@
-import { IGherkinStep } from './interfaces/gherkin-step.type.js'
+import { IGherkinStep } from './interfaces/gherkin-step.type'
 
 export class GherkinLogs {
-  public static parseGherkinLogs(logs: string): IGherkinStep[] {
+  static parseGherkinLogs(logs: string): IGherkinStep[] {
     const lines = logs.split('\n')
     const result: IGherkinStep[] = []
     let currentStep: IGherkinStep | null = null
-    let isEndStep: boolean = false
+    let isEndStep = false
 
     currentStep = {
       key: 'Hook',
@@ -16,7 +16,7 @@ export class GherkinLogs {
     } // logs for before
 
     for (let i = 0; i < lines.length; i++) {
-      let line = lines[i]
+      const line = lines[i]
       if (
         line.startsWith('Given') ||
         line.startsWith('When') ||
@@ -61,7 +61,7 @@ export class GherkinLogs {
         } else {
           //After
           if (isEndStep === true && this.isAfter(lines, i)) {
-            if (currentStep && currentStep.step != 'After') {
+            if (currentStep && currentStep.step !== 'After') {
               this.addStepResult(result, currentStep)
               currentStep = {
                 key: 'Hook',
@@ -87,7 +87,7 @@ export class GherkinLogs {
   private static addStepResult(
     result: IGherkinStep[],
     currentStep: IGherkinStep
-  ) {
+  ): void {
     if (currentStep.status === 'error') {
       currentStep.time = this.getTimeFromLine(
         currentStep.log[currentStep.log.length - 1]
@@ -139,7 +139,6 @@ export class GherkinLogs {
     const match = line.match(regex)
 
     if (match && match.length > 0) {
-      const m = match[0]
       return true
     } else {
       return false

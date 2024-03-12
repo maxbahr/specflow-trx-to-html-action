@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
-import { FileUtils } from './fs-utils.class.js'
-import { HtmlGenerator } from './html-generator.class.js'
-import { ISummaryResult } from './interfaces/summary-result.type.js'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
-import { TestResultPreparing } from './test-result-preparing.class.js'
+import { FileUtils } from './fs-utils.class'
+import { HtmlGenerator } from './html-generator.class'
+import { ISummaryResult } from './interfaces/summary-result.type'
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
+import { TestResultPreparing } from './test-result-preparing.class'
 
 /**
  * The main function for the action.
@@ -31,7 +31,7 @@ export async function run(): Promise<void> {
         unitTestResults,
         summaryDomainResult
       )
-    let htmlContent = HtmlGenerator.generateHTML(
+    const htmlContent = HtmlGenerator.generateHTML(
       summaryResult,
       summaryDomainResult,
       unitTestResults,

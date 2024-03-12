@@ -1,12 +1,14 @@
 import path from 'path'
 import fs from 'fs/promises'
 import sharp from 'sharp'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
-import { IAttachmentBase64 } from './interfaces/attachment-base64.type.js'
-const fileType = require('file-type')
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
+import { IAttachmentBase64 } from './interfaces/attachment-base64.type'
+
+// eslint-disable-next-line import/no-commonjs, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+const { fileTypeFromBuffer } = require('file-type')
 
 export class AttachmentFilesBase64 {
-  public static async addAttachmentFilesAsync(
+  static async addAttachmentFilesAsync(
     tests: IUnitTestResult[],
     filePaths: string[]
   ): Promise<IUnitTestResult[]> {
@@ -17,27 +19,30 @@ export class AttachmentFilesBase64 {
         ?.filter(a => a.attachments && a.attachments.length > 0)
         .flatMap(m => m.attachments)
       if (gherkinAttachments) {
-        let files: IAttachmentBase64[] = []
+        const files: IAttachmentBase64[] = []
 
         for (const gherkinFilePath of gherkinAttachments) {
-          const testDataIndex = gherkinFilePath!.indexOf(dirToStart)
-          const truncatedPath = gherkinFilePath!
-            .substring(testDataIndex)
-            .replace(/\//g, '\\')
-          const filePath = filePaths.find(f => f.endsWith(truncatedPath))!
+          if (gherkinFilePath) {
+            const testDataIndex = gherkinFilePath.indexOf(dirToStart)
+            const truncatedPath = gherkinFilePath
+              .substring(testDataIndex)
+              .replace(/\//g, '\\')
+            const filePath = filePaths.find(f => f.endsWith(truncatedPath))
+            if (filePath) {
+              let fileBase64
+              try {
+                fileBase64 = await this.convertFileToBase64Async(filePath)
+              } catch (error) {
+                console.error(
+                  `Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`,
+                  error
+                )
+              }
 
-          let fileBase64
-          try {
-            fileBase64 = await this.convertFileToBase64Async(filePath)
-          } catch (error) {
-            console.error(
-              `Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`,
-              error
-            )
-          }
-
-          if (fileBase64) {
-            files.push(fileBase64)
+              if (fileBase64) {
+                files.push(fileBase64)
+              }
+            }
           }
         }
         test.attachmentFiles = files
@@ -67,7 +72,7 @@ export class AttachmentFilesBase64 {
   }
 
   private static async getFileTypeAsync(data: Buffer): Promise<string> {
-    const type = await fileType.fileTypeFromBuffer(data)
+    const type = await fileTypeFromBuffer(data)
     return type ? type.mime : 'unknown'
   }
 
@@ -76,8 +81,6 @@ export class AttachmentFilesBase64 {
     width: number,
     height: number
   ): Promise<Buffer> {
-    return await sharp(data)
-      .resize({ width: width, height: height, fit: 'inside' })
-      .toBuffer()
+    return await sharp(data).resize({ width, height, fit: 'inside' }).toBuffer()
   }
 }

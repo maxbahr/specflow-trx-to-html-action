@@ -1,7 +1,7 @@
 import moment from 'moment'
-import { IAttachmentBase64 } from './interfaces/attachment-base64.type.js'
-import { ISummaryResult } from './interfaces/summary-result.type.js'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
+import { IAttachmentBase64 } from './interfaces/attachment-base64.type'
+import { ISummaryResult } from './interfaces/summary-result.type'
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
 import _ from 'lodash'
 
 export class HtmlComponent {
@@ -11,7 +11,7 @@ export class HtmlComponent {
   private static readonly iconIgnored: string = '⚪'
   private static readonly iconRerun: string = '🔄'
 
-  public static summaryTableComponent(
+  static summaryTableComponent(
     summaryResult: ISummaryResult,
     results: IUnitTestResult[]
   ): string {
@@ -22,7 +22,7 @@ export class HtmlComponent {
               <div class="col fs-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Passed">${this.iconPassed}&nbsp;<span class="passed-number">${summaryResult.passed}</span></div>
               <div class="col fs-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Failed">${this.iconFailed}&nbsp;<span class="failed-number">${summaryResult.failed}</span></div>
               <div class="col fs-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Ignored">${this.iconIgnored}&nbsp;<span class="failed-number">${summaryResult.ignored}</span></div>
-              <div class="col fs-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rerun">${this.iconRerun}&nbsp;<span class="rerun-number">${results.filter(t => t.rerun == true).length}</span></div>
+              <div class="col fs-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rerun">${this.iconRerun}&nbsp;<span class="rerun-number">${results.filter(t => t.rerun === true).length}</span></div>
             </div>
           </div>
           <div class="col text-center"><span class='total-passed-percentage'>${this.calculatePercentage(summaryResult.passed, summaryResult.passed + summaryResult.failed)}%&nbsp;passed</span></div>
@@ -38,17 +38,20 @@ export class HtmlComponent {
       `
   }
 
-  public static testResultComponent(result: IUnitTestResult, iterator: number) {
+  static testResultComponent(
+    result: IUnitTestResult,
+    iterator: number
+  ): string {
     const duration = this.formatTime(result.duration)
     const startTime = moment(result.startTime).format('YYYY-MM-DD hh:mm:ss')
     const endTime = moment(result.endTime).format('YYYY-MM-DD hh:mm:ss')
-    let outcome = this.returnIconByStatus(result.outcome)
-    let preOutcome = result.previousRun?.outcome
+    const outcome = this.returnIconByStatus(result.outcome)
+    const preOutcome = result.previousRun?.outcome
       ? this.returnIconByStatus(result.previousRun?.outcome)
       : undefined
 
     const errMsg = _.escape(result.errMsg || '')
-    const stdout = _.escape(result.stdout || '')
+    // const stdout = _.escape(result.stdout || '')
     const title = _.escape(result.testName || '')
     const params = _.escape(result.testParameters || '')
 
@@ -81,7 +84,7 @@ export class HtmlComponent {
         </tr>`
   }
 
-  public static domainSummaryTableComponent(summary: ISummaryResult): string {
+  static domainSummaryTableComponent(summary: ISummaryResult): string {
     return `<tr>
         <td><b>${summary.domain}</b></td>
         <td width='75%'>${this.returnTestProgress(summary, true)}</td>
@@ -93,7 +96,7 @@ export class HtmlComponent {
         </tr>`
   }
 
-  public static optionComponent(value: string, text: string) {
+  static optionComponent(value: string, text: string): string {
     return `<option value="${value}">${text}</option>`
   }
 
@@ -106,13 +109,14 @@ export class HtmlComponent {
     const r = result.outcome
     const pRun = result.previousRun
     const pRunErrMsg = pRun ? _.escape(pRun.errMsg || '') : ''
+    if (!errMsg) return ''
 
     if (r === 'Passed') {
       return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="passed-msg">All steps passed</div>`
     } else if (r === 'Failed') {
-      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="error-msg"">${this.truncateText(errMsg!, 300)}</div>`
+      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="error-msg"">${this.truncateText(errMsg, 300)}</div>`
     } else if (r === 'Ignored') {
-      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="ignored-msg"">${this.truncateText(errMsg!, 300)}</div>`
+      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="ignored-msg"">${this.truncateText(errMsg, 300)}</div>`
     } else {
       return ''
     }
@@ -144,7 +148,7 @@ export class HtmlComponent {
         `
   }
 
-  private static calculatePercentage(part: number, total: number) {
+  private static calculatePercentage(part: number, total: number): number {
     if (total === 0) {
       return 0
     }
@@ -173,7 +177,7 @@ export class HtmlComponent {
         ${g.table ? g.table.map(r => `<div class='step-data small'><pre>${r}</pre></div>`).join('') : ``}
         ${g.log ? g.log.map(r => `<div class='step-logs small d-none'><pre>${_.escape(r)}</pre></div>`).join('') : ``}
         ${
-          g.status == 'error'
+          g.status === 'error'
             ? `<h5 class='error-heading'>Error Message:</h5><div class='error-text'><pre style='color: in'>${result.errMsg}</pre></div>
         ${
           result.attachmentFiles
@@ -204,7 +208,7 @@ export class HtmlComponent {
 
   private static listAttachments(
     attachments: IAttachmentBase64[],
-    showHaeading: boolean = true
+    showHaeading = true
   ): string {
     let text = ''
     for (const attachment of attachments) {
@@ -235,7 +239,7 @@ export class HtmlComponent {
     return 'grey'
   }
 
-  private static formatTime(seconds: number) {
+  private static formatTime(seconds: number): string {
     if (seconds < 60) {
       return `${Math.round(seconds)}s`
     } else if (seconds < 3600) {
@@ -253,7 +257,7 @@ export class HtmlComponent {
   private static truncateText(text: string, maxLength: number): string {
     text = text.replace(/[\r\n]+/g, ' ')
     if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...'
+      return `${text.substring(0, maxLength)}...`
     } else {
       return text
     }

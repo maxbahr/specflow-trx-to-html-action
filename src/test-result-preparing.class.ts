@@ -1,11 +1,11 @@
 import moment from 'moment'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
-import { ISummaryResult } from './interfaces/summary-result.type.js'
-import { AttachmentFilesBase64 } from './attachment-file-base64.class.js'
-import { TrxParser } from './trx-parser.class.js'
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
+import { ISummaryResult } from './interfaces/summary-result.type'
+import { AttachmentFilesBase64 } from './attachment-file-base64.class'
+import { TrxParser } from './trx-parser.class'
 
 export class TestResultPreparing {
-  public static async prepareUnitTestResult(
+  static async prepareUnitTestResult(
     trxFiles: string[],
     attachmentFiles: string[]
   ): Promise<IUnitTestResult[]> {
@@ -26,7 +26,7 @@ export class TestResultPreparing {
     return unitTestResults
   }
 
-  public static prepareSummaryResult(
+  static prepareSummaryResult(
     unitTestResults: IUnitTestResult[],
     summaryDomainResult: ISummaryResult[]
   ): ISummaryResult {
@@ -52,26 +52,24 @@ export class TestResultPreparing {
     return summaryResult
   }
 
-  public static prepareDomainSummaryResult(
-    data: IUnitTestResult[]
-  ): ISummaryResult[] {
-    let summaryDomainResult: ISummaryResult[] = []
+  static prepareDomainSummaryResult(data: IUnitTestResult[]): ISummaryResult[] {
+    const summaryDomainResult: ISummaryResult[] = []
     const domainList = Array.from(
       new Set(data.map(domain => domain.testDomain))
     )
     for (const domain of domainList) {
       const domainResults = data.filter(r => r.testDomain === domain)
-      const passed = domainResults.filter(t => t.outcome == 'Passed').length
-      const failed = domainResults.filter(t => t.outcome == 'Failed').length
-      const ignored = domainResults.filter(t => t.outcome == 'Ignored').length
+      const passed = domainResults.filter(t => t.outcome === 'Passed').length
+      const failed = domainResults.filter(t => t.outcome === 'Failed').length
+      const ignored = domainResults.filter(t => t.outcome === 'Ignored').length
 
       const total = passed + failed + ignored
       summaryDomainResult.push({
-        domain: domain,
-        passed: passed,
-        failed: failed,
-        ignored: ignored,
-        total: total,
+        domain,
+        passed,
+        failed,
+        ignored,
+        total,
         duration: TestResultPreparing.getRealDuration(domainResults),
         startDate: TestResultPreparing.getStartDate(domainResults).toDate(),
         endDate: TestResultPreparing.getEndDate(domainResults).toDate()
@@ -115,7 +113,7 @@ export class TestResultPreparing {
       return 0
     })
 
-    tests.forEach(test => {
+    for (const test of tests) {
       const key = `${test.testDomain}-${test.featureName}-${test.testFullName}`
       const existingTest = testMap.get(key)
 
@@ -127,7 +125,7 @@ export class TestResultPreparing {
         test.rerun = true
         testMap.set(key, test)
       }
-    })
+    }
 
     return Array.from(testMap.values())
   }

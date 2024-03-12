@@ -2,7 +2,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 
 export class FileUtils {
-  public static createDirectories(filePath: string): void {
+  static createDirectories(filePath: string): void {
     const directoryPath = path.dirname(filePath)
 
     if (!fs.existsSync(directoryPath)) {
@@ -10,10 +10,10 @@ export class FileUtils {
     }
   }
 
-  public static async findTrxFilesAsync(folderPath: string): Promise<string[]> {
-    let trxFiles: string[] = []
+  static async findTrxFilesAsync(folderPath: string): Promise<string[]> {
+    const trxFiles: string[] = []
 
-    async function findFilesRecursively(currentPath: string) {
+    async function findFilesRecursively(currentPath: string): Promise<void> {
       const files = await fs.promises.readdir(currentPath)
 
       for (const file of files) {
@@ -39,12 +39,10 @@ export class FileUtils {
     }
   }
 
-  public static async findAttachmentFilesAsync(
-    folderPath: string
-  ): Promise<string[]> {
-    let trxFiles: string[] = []
+  static async findAttachmentFilesAsync(folderPath: string): Promise<string[]> {
+    const trxFiles: string[] = []
 
-    async function findFilesRecursively(currentPath: string) {
+    async function findFilesRecursively(currentPath: string): Promise<void> {
       const files = await fs.promises.readdir(currentPath)
 
       for (const file of files) {

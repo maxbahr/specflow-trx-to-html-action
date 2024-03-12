@@ -1,17 +1,17 @@
 import * as fs from 'fs'
 import { parseString } from 'xml2js'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
 import moment from 'moment'
-import { GherkinLogs } from './gherkin-logs.class.js'
+import { GherkinLogs } from './gherkin-logs.class'
 
 export class TrxParser {
-  public static async parseTRXFileAsync(
+  static async parseTRXFileAsync(
     trxFilePath: string
   ): Promise<IUnitTestResult[]> {
     return new Promise((resolve, reject) => {
-      fs.readFile(trxFilePath, 'utf-8', (err, trxFileContent) => {
-        if (err) {
-          reject(err)
+      fs.readFile(trxFilePath, 'utf-8', (readFileError, trxFileContent) => {
+        if (readFileError) {
+          reject(readFileError)
           return
         }
 
@@ -34,7 +34,7 @@ export class TrxParser {
             result.TestRun.TestDefinitions[0].UnitTest[0].TestMethod
           ) {
             const testResults = result.TestRun.Results[0].UnitTestResult
-            testResults.forEach((testResult: any) => {
+            for (const testResult of testResults) {
               let output: string
               try {
                 output = testResult.Output[0].StdOut[0]
@@ -50,6 +50,7 @@ export class TrxParser {
               const testId = testResult.$.testId
               const testDefinitions = result.TestRun.TestDefinitions[0]
               const unitTest = testDefinitions.UnitTest.find(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (test: any) => test.$.id === testId
               )
               const className = unitTest.TestMethod[0].$.className
@@ -62,10 +63,10 @@ export class TrxParser {
               const testDomainEndTime = result.TestRun.Times[0].$.finish
 
               unitTestResults.push({
-                testId: testId,
-                testDomainStartTime: testDomainStartTime,
-                testDomainEndTime: testDomainEndTime,
-                testDomain: testDomain,
+                testId,
+                testDomainStartTime,
+                testDomainEndTime,
+                testDomain,
                 featureName: featurName,
                 testFullName: testResult.$.testName,
                 testName: this.parseTestName(testResult.$.testName),
@@ -87,7 +88,7 @@ export class TrxParser {
                 errMsg: err,
                 rerun: false
               })
-            })
+            }
           }
 
           resolve(unitTestResults)
@@ -96,7 +97,7 @@ export class TrxParser {
     })
   }
 
-  private static convertTimeToSeconds(timeString: string) {
+  private static convertTimeToSeconds(timeString: string): number {
     const time = moment.duration(timeString)
     const seconds = time.asSeconds()
     return seconds
@@ -110,7 +111,7 @@ export class TrxParser {
   private static parseTestParameters(text: string): string {
     const regex = /\((.*?exampleTags:.*?)\)/
     const match = text.match(regex)
-    let params: string = ''
+    let params = ''
     if (match) {
       params = match[1]
     }

@@ -1,24 +1,23 @@
 import * as fs from 'fs'
 import { Options, minify } from 'html-minifier'
-import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
-import _ from 'lodash'
-import { ISummaryResult } from './interfaces/summary-result.type.js'
-import { FileUtils } from './fs-utils.class.js'
-import { HtmlComponent } from './html-component.class.js'
+import { IUnitTestResult } from './interfaces/unit-test-result.type'
+import { ISummaryResult } from './interfaces/summary-result.type'
+import { FileUtils } from './fs-utils.class'
+import { HtmlComponent } from './html-component.class'
 
 export class HtmlGenerator {
-  public static generateHTML(
+  static generateHTML(
     summaryResult: ISummaryResult,
     summaryDomainResult: ISummaryResult[],
     results: IUnitTestResult[],
     templatePath: string
   ): string {
     let htmlContent: string = fs.readFileSync(templatePath, 'utf-8')
-    let iterator: number = 0
-    let testTableContent: string = ''
-    let domainSummaryTableContent: string = ''
-    let domainFilterOptions: string = ''
-    let featureFilterOptions: string = ''
+    let iterator = 0
+    let testTableContent = ''
+    let domainSummaryTableContent = ''
+    let domainFilterOptions = ''
+    let featureFilterOptions = ''
     const summaryTableContent: string = HtmlComponent.summaryTableComponent(
       summaryResult,
       results
@@ -36,13 +35,12 @@ export class HtmlGenerator {
     const allFeatureNames: string[] = results.map(f => f.featureName)
     const uniqueFeatureNames: string[] = [...new Set(allFeatureNames)]
     uniqueFeatureNames.sort()
-    uniqueFeatureNames.forEach(
-      featureName =>
-        (featureFilterOptions += HtmlComponent.optionComponent(
-          featureName,
-          featureName
-        ))
-    )
+    for (const featureName of uniqueFeatureNames) {
+      featureFilterOptions += HtmlComponent.optionComponent(
+        featureName,
+        featureName
+      )
+    }
 
     //Test Results
     for (const result of results) {
@@ -84,13 +82,13 @@ export class HtmlGenerator {
     return htmlContent
   }
 
-  public static saveHtml(
+  static saveHtml(
     outputHTMLPath: string,
     htmlContent: string,
-    minify: boolean
+    shouldMinify: boolean
   ): void {
     FileUtils.createDirectories(outputHTMLPath)
-    htmlContent = minify ? this.minifyHtml(htmlContent) : htmlContent
+    htmlContent = shouldMinify ? this.minifyHtml(htmlContent) : htmlContent
     fs.writeFileSync(outputHTMLPath, htmlContent, 'utf-8')
     console.log(`HTML file saved at: ${outputHTMLPath}`)
   }

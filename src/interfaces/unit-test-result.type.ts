@@ -1,5 +1,5 @@
-import { IAttachmentBase64 } from './attachment-base64.type.js'
-import { IGherkinStep } from './gherkin-step.type.js'
+import { IAttachmentBase64 } from './attachment-base64.type'
+import { IGherkinStep } from './gherkin-step.type'
 
 export interface IUnitTestResult {
   testId: string
