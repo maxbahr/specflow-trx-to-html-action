@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import sharp from 'sharp'
 import { IUnitTestResult } from './interfaces/unit-test-result.type.js'
 import { IAttachmentBase64 } from './interfaces/attachment-base64.type.js'
-import { fileTypeFromBuffer } from 'file-type'
+const fileType = require('file-type')
 
 export class AttachmentFilesBase64 {
   public static async addAttachmentFilesAsync(
@@ -67,7 +67,7 @@ export class AttachmentFilesBase64 {
   }
 
   private static async getFileTypeAsync(data: Buffer): Promise<string> {
-    const type = await fileTypeFromBuffer(data)
+    const type = await fileType.fileTypeFromBuffer(data)
     return type ? type.mime : 'unknown'
   }
 
