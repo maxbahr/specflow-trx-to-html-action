@@ -1,5 +1,4 @@
-require('./sourcemap-register.js');import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
-/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -82478,7 +82477,7 @@ module.exports = require("buffer");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("child_process");
+module.exports = require("child_process");
 
 /***/ }),
 
@@ -82526,7 +82525,7 @@ module.exports = require("fs");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
+module.exports = require("fs/promises");
 
 /***/ }),
 
@@ -82646,7 +82645,7 @@ module.exports = require("string_decoder");
 /***/ ((module) => {
 
 "use strict";
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("timers");
+module.exports = require("timers");
 
 /***/ }),
 
