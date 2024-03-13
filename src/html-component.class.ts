@@ -56,7 +56,7 @@ export class HtmlComponent {
 
     return `<tr class="table-row"
               data-bs-toggle="modal" 
-              data-bs-target="#modalTestResults" 
+              data-bs-target="#modal-test-results" 
               data-bs-icon-outcome='${outcome}' 
               data-bs-outcome='${result.outcome}' 
               data-bs-rerun='${result.rerun}' 
