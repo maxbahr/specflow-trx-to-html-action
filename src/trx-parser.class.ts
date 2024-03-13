@@ -55,12 +55,16 @@ export class TrxParser {
               )
               const className = unitTest.TestMethod[0].$.className
               const parts = className.split('.')
-              const testDomain = parts[4]
-              const featurName = parts[5]
+              const testDomain = parts[parts.length - 2]
+              const featurName = parts[parts.length - 1]
                 .replace('_', ' - ')
                 .replace('Feature', '')
-              const testDomainStartTime = result.TestRun.Times[0].$.start
-              const testDomainEndTime = result.TestRun.Times[0].$.finish
+              const testDomainStartTime = moment(
+                result.TestRun.Times[0].$.start
+              ).toDate()
+              const testDomainEndTime = moment(
+                result.TestRun.Times[0].$.finish
+              ).toDate()
 
               unitTestResults.push({
                 testId,
