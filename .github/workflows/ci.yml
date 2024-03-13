@@ -46,7 +46,7 @@ jobs:
 
   test-action:
     name: GitHub Actions Test
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -57,6 +57,6 @@ jobs:
         id: test-action
         uses: ./
         with:
-          trxDirPath: './trx'
-          attachmentsDirPath: './attachments'
+          trxDirPath: './__tests__/trx'
+          attachmentsDirPath: './__tests__/attachments'
           outputHtmlPath: 'output/results.html'
