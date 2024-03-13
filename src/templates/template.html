@@ -441,15 +441,15 @@
         var toggleLogs = document.getElementById('toggle-logs')
 
         toggleLogs.addEventListener('change', function () {
-            var elementsToToggles = document.querySelectorAll('.step-logs')
-            elementsToToggles.forEach(elementsToToggle => {
-              if (toggleLogs.checked) {
-                elementsToToggle.classList.remove('d-none')
-              } else {
-                elementsToToggle.classList.add('d-none')
-              }
-            })
+          var elementsToToggles = document.querySelectorAll('.step-logs')
+          elementsToToggles.forEach(elementsToToggle => {
+            if (toggleLogs.checked) {
+              elementsToToggle.classList.remove('d-none')
+            } else {
+              elementsToToggle.classList.add('d-none')
+            }
           })
+        })
       })
     </script>
     <script>
