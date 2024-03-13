@@ -51,7 +51,6 @@ export class HtmlComponent {
       : undefined
 
     const errMsg = _.escape(result.errMsg || '')
-    // const stdout = _.escape(result.stdout || '')
     const title = _.escape(result.testName || '')
     const params = _.escape(result.testParameters || '')
 

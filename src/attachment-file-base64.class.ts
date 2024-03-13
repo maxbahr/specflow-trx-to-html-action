@@ -1,19 +1,15 @@
 import path from 'path'
 import fs from 'fs/promises'
 import sharp from 'sharp'
+import mime from 'mime-types'
 import { IUnitTestResult } from './interfaces/unit-test-result.type'
 import { IAttachmentBase64 } from './interfaces/attachment-base64.type'
-
-// eslint-disable-next-line import/no-commonjs, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const { fileTypeFromBuffer } = require('file-type')
 
 export class AttachmentFilesBase64 {
   static async addAttachmentFilesAsync(
     tests: IUnitTestResult[],
     filePaths: string[]
   ): Promise<IUnitTestResult[]> {
-    const dirToStart = 'TestData'
-
     for (const test of tests) {
       const gherkinAttachments = test.gherkinLogs
         ?.filter(a => a.attachments && a.attachments.length > 0)
@@ -23,11 +19,9 @@ export class AttachmentFilesBase64 {
 
         for (const gherkinFilePath of gherkinAttachments) {
           if (gherkinFilePath) {
-            const testDataIndex = gherkinFilePath.indexOf(dirToStart)
-            const truncatedPath = gherkinFilePath
-              .substring(testDataIndex)
-              .replace(/\//g, '\\')
-            const filePath = filePaths.find(f => f.endsWith(truncatedPath))
+            const filePath = filePaths.find(f =>
+              this.pathsMatch(f, gherkinFilePath)
+            )
             if (filePath) {
               let fileBase64
               try {
@@ -52,6 +46,18 @@ export class AttachmentFilesBase64 {
     return tests
   }
 
+  private static pathsMatch(path1: string, path2: string): boolean {
+    const normalizedPath1 = path.normalize(path1).split(path.sep)
+    const normalizedPath2 = path.normalize(path2).split(path.sep)
+    const matchFileName =
+      normalizedPath1[normalizedPath1.length - 1] ===
+      normalizedPath2[normalizedPath2.length - 1] //fileName
+    const matchSubfolder =
+      normalizedPath1[normalizedPath1.length - 2] ===
+      normalizedPath2[normalizedPath2.length - 2] //subfolder
+    return matchFileName && matchSubfolder
+  }
+
   private static async convertFileToBase64Async(
     filePath: string
   ): Promise<IAttachmentBase64> {
@@ -60,7 +66,7 @@ export class AttachmentFilesBase64 {
 
     const data = await fs.readFile(filePath)
     const fileName = path.basename(filePath)
-    const type = await this.getFileTypeAsync(data)
+    const type = this.getFileType(filePath)
     if (type.startsWith('image')) {
       const resizedData = await this.resizeImageAsync(data, imgWidth, imgHeight)
       const base64Data = Buffer.from(resizedData).toString('base64')
@@ -71,9 +77,9 @@ export class AttachmentFilesBase64 {
     }
   }
 
-  private static async getFileTypeAsync(data: Buffer): Promise<string> {
-    const type = await fileTypeFromBuffer(data)
-    return type ? type.mime : 'unknown'
+  private static getFileType(filePath: string): string {
+    const mimeType = mime.lookup(filePath)
+    return mimeType ? mimeType : 'unknown'
   }
 
   private static async resizeImageAsync(

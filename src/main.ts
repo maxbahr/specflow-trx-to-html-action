@@ -12,11 +12,9 @@ import { TestResultPreparing } from './test-result-preparing.class'
 export async function run(): Promise<void> {
   try {
     //Inputs
-    const trxDirPath = core.getInput('trxDirPath') || './trx'
-    const attachmentDirPath =
-      core.getInput('attachmentsDirPath') || './attachments'
-    const outputHtmlPath =
-      core.getInput('outputHtmlPath') || 'output/result.html'
+    const trxDirPath = core.getInput('trxDirPath')
+    const attachmentDirPath = core.getInput('attachmentsDirPath')
+    const outputHtmlPath = core.getInput('outputHtmlPath')
 
     const templatePath = './src/templates/template.html'
     const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath)
