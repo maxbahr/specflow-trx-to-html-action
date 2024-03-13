@@ -1,4 +1,5 @@
-require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 7351:
@@ -81434,15 +81435,6 @@ exports["default"] = _default;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -81453,35 +81445,34 @@ const promises_1 = __importDefault(__nccwpck_require__(3292));
 const sharp_1 = __importDefault(__nccwpck_require__(4185));
 const mime_types_1 = __importDefault(__nccwpck_require__(3583));
 class AttachmentFilesBase64 {
-    static addAttachmentFilesAsync(tests, filePaths) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            for (const test of tests) {
-                const gherkinAttachments = (_a = test.gherkinLogs) === null || _a === void 0 ? void 0 : _a.filter(a => a.attachments && a.attachments.length > 0).flatMap(m => m.attachments);
-                if (gherkinAttachments) {
-                    const files = [];
-                    for (const gherkinFilePath of gherkinAttachments) {
-                        if (gherkinFilePath) {
-                            const filePath = filePaths.find(f => this.pathsMatch(f, gherkinFilePath));
-                            if (filePath) {
-                                let fileBase64;
-                                try {
-                                    fileBase64 = yield this.convertFileToBase64Async(path_1.default.normalize(filePath));
-                                }
-                                catch (error) {
-                                    console.error(`Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`, error);
-                                }
-                                if (fileBase64) {
-                                    files.push(fileBase64);
-                                }
+    static async addAttachmentFilesAsync(tests, filePaths) {
+        for (const test of tests) {
+            const gherkinAttachments = test.gherkinLogs
+                ?.filter(a => a.attachments && a.attachments.length > 0)
+                .flatMap(m => m.attachments);
+            if (gherkinAttachments) {
+                const files = [];
+                for (const gherkinFilePath of gherkinAttachments) {
+                    if (gherkinFilePath) {
+                        const filePath = filePaths.find(f => this.pathsMatch(f, gherkinFilePath));
+                        if (filePath) {
+                            let fileBase64;
+                            try {
+                                fileBase64 = await this.convertFileToBase64Async(path_1.default.normalize(filePath));
+                            }
+                            catch (error) {
+                                console.error(`Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`, error);
+                            }
+                            if (fileBase64) {
+                                files.push(fileBase64);
                             }
                         }
                     }
-                    test.attachmentFiles = files;
                 }
+                test.attachmentFiles = files;
             }
-            return tests;
-        });
+        }
+        return tests;
     }
     static pathsMatch(path1, path2) {
         const normalizedPath1 = path_1.default.normalize(path1).split(path_1.default.sep);
@@ -81492,32 +81483,28 @@ class AttachmentFilesBase64 {
             normalizedPath2[normalizedPath2.length - 2]; //subfolder
         return matchFileName && matchSubfolder;
     }
-    static convertFileToBase64Async(filePath) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const imgWidth = 1200;
-            const imgHeight = 675;
-            const data = yield promises_1.default.readFile(filePath);
-            const fileName = path_1.default.basename(filePath);
-            const type = this.getFileType(filePath);
-            if (type.startsWith('image')) {
-                const resizedData = yield this.resizeImageAsync(data, imgWidth, imgHeight);
-                const base64Data = Buffer.from(resizedData).toString('base64');
-                return { filePath, fileName, base64Data, fileType: type };
-            }
-            else {
-                const base64Data = Buffer.from(data).toString('base64');
-                return { filePath, fileName, base64Data, fileType: type };
-            }
-        });
+    static async convertFileToBase64Async(filePath) {
+        const imgWidth = 1200;
+        const imgHeight = 675;
+        const data = await promises_1.default.readFile(filePath);
+        const fileName = path_1.default.basename(filePath);
+        const type = this.getFileType(filePath);
+        if (type.startsWith('image')) {
+            const resizedData = await this.resizeImageAsync(data, imgWidth, imgHeight);
+            const base64Data = Buffer.from(resizedData).toString('base64');
+            return { filePath, fileName, base64Data, fileType: type };
+        }
+        else {
+            const base64Data = Buffer.from(data).toString('base64');
+            return { filePath, fileName, base64Data, fileType: type };
+        }
     }
     static getFileType(filePath) {
         const mimeType = mime_types_1.default.lookup(filePath);
         return mimeType ? mimeType : 'unknown';
     }
-    static resizeImageAsync(data, width, height) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield (0, sharp_1.default)(data).resize({ width, height, fit: 'inside' }).toBuffer();
-        });
+    static async resizeImageAsync(data, width, height) {
+        return await (0, sharp_1.default)(data).resize({ width, height, fit: 'inside' }).toBuffer();
     }
 }
 exports.AttachmentFilesBase64 = AttachmentFilesBase64;
@@ -81553,15 +81540,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileUtils = void 0;
 const path = __importStar(__nccwpck_require__(1017));
@@ -81576,69 +81554,61 @@ class FileUtils {
             fs.mkdirSync(directoryPath, { recursive: true });
         }
     }
-    static findTrxFilesAsync(folderPath) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.isValidPath(folderPath)) {
-                throw new Error(`'${folderPath}' is not valid folder path. Should include path separator`);
-            }
-            const trxFiles = [];
-            function findFilesRecursively(currentPath) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    const files = yield fs.promises.readdir(currentPath);
-                    for (const file of files) {
-                        const filePath = path.join(currentPath, file);
-                        const fileStat = yield fs.promises.stat(filePath);
-                        if (fileStat.isDirectory()) {
-                            yield findFilesRecursively(filePath);
-                        }
-                        else {
-                            if (file.endsWith('.trx')) {
-                                trxFiles.push(filePath);
-                            }
-                        }
+    static async findTrxFilesAsync(folderPath) {
+        if (!this.isValidPath(folderPath)) {
+            throw new Error(`'${folderPath}' is not valid folder path. Should include path separator`);
+        }
+        const trxFiles = [];
+        async function findFilesRecursively(currentPath) {
+            const files = await fs.promises.readdir(currentPath);
+            for (const file of files) {
+                const filePath = path.join(currentPath, file);
+                const fileStat = await fs.promises.stat(filePath);
+                if (fileStat.isDirectory()) {
+                    await findFilesRecursively(filePath);
+                }
+                else {
+                    if (file.endsWith('.trx')) {
+                        trxFiles.push(filePath);
                     }
-                });
+                }
             }
-            try {
-                yield findFilesRecursively(folderPath);
-                return trxFiles;
-            }
-            catch (error) {
-                console.error(`Error while reading folder ${folderPath}:`, error);
-                return [];
-            }
-        });
+        }
+        try {
+            await findFilesRecursively(folderPath);
+            return trxFiles;
+        }
+        catch (error) {
+            console.error(`Error while reading folder ${folderPath}:`, error);
+            return [];
+        }
     }
-    static findAttachmentFilesAsync(folderPath) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.isValidPath(folderPath)) {
-                throw new Error(`'${folderPath}' is not valid folder path. Should include path separator`);
+    static async findAttachmentFilesAsync(folderPath) {
+        if (!this.isValidPath(folderPath)) {
+            throw new Error(`'${folderPath}' is not valid folder path. Should include path separator`);
+        }
+        const trxFiles = [];
+        async function findFilesRecursively(currentPath) {
+            const files = await fs.promises.readdir(currentPath);
+            for (const file of files) {
+                const filePath = path.join(currentPath, file);
+                const fileStat = await fs.promises.stat(filePath);
+                if (fileStat.isDirectory()) {
+                    await findFilesRecursively(filePath);
+                }
+                else {
+                    trxFiles.push(filePath);
+                }
             }
-            const trxFiles = [];
-            function findFilesRecursively(currentPath) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    const files = yield fs.promises.readdir(currentPath);
-                    for (const file of files) {
-                        const filePath = path.join(currentPath, file);
-                        const fileStat = yield fs.promises.stat(filePath);
-                        if (fileStat.isDirectory()) {
-                            yield findFilesRecursively(filePath);
-                        }
-                        else {
-                            trxFiles.push(filePath);
-                        }
-                    }
-                });
-            }
-            try {
-                yield findFilesRecursively(folderPath);
-                return trxFiles;
-            }
-            catch (error) {
-                console.error(`Error while reading folder ${folderPath}:`, error);
-                return [];
-            }
-        });
+        }
+        try {
+            await findFilesRecursively(folderPath);
+            return trxFiles;
+        }
+        catch (error) {
+            console.error(`Error while reading folder ${folderPath}:`, error);
+            return [];
+        }
     }
     static isValidPath(filePath) {
         try {
@@ -81829,6 +81799,11 @@ exports.HtmlComponent = void 0;
 const moment_1 = __importDefault(__nccwpck_require__(9623));
 const lodash_1 = __importDefault(__nccwpck_require__(250));
 class HtmlComponent {
+    static iconTotal = '🧾';
+    static iconPassed = '✅';
+    static iconFailed = '❌';
+    static iconIgnored = '⚪';
+    static iconRerun = '🔄';
     static summaryTableComponent(summaryResult, results) {
         return `<div class="row align-items-center row-summary">
           <div class="col summary-details">
@@ -81853,13 +81828,12 @@ class HtmlComponent {
       `;
     }
     static testResultComponent(result, iterator) {
-        var _a, _b;
         const duration = this.formatTime(result.duration);
         const startTime = (0, moment_1.default)(result.startTime).format('YYYY-MM-DD hh:mm:ss');
         const endTime = (0, moment_1.default)(result.endTime).format('YYYY-MM-DD hh:mm:ss');
         const outcome = this.returnIconByStatus(result.outcome);
-        const preOutcome = ((_a = result.previousRun) === null || _a === void 0 ? void 0 : _a.outcome)
-            ? this.returnIconByStatus((_b = result.previousRun) === null || _b === void 0 ? void 0 : _b.outcome)
+        const preOutcome = result.previousRun?.outcome
+            ? this.returnIconByStatus(result.previousRun?.outcome)
             : undefined;
         const errMsg = lodash_1.default.escape(result.errMsg || '');
         const title = lodash_1.default.escape(result.testName || '');
@@ -81966,10 +81940,10 @@ class HtmlComponent {
         }
     }
     static returnStepComponent(result) {
-        var _a;
         return lodash_1.default.escape(`
         <div id='test-${result.testId}'>
-        ${(_a = result.gherkinLogs) === null || _a === void 0 ? void 0 : _a.map(g => `<div class='text-break' style='color: ${this.getStatusColor(g.status)}'><b>${g.key}</b> ${this.wrapPhraseWithSpan(g.step)} <span class='step-time small'>(${g.time})</span>
+        ${result.gherkinLogs
+            ?.map(g => `<div class='text-break' style='color: ${this.getStatusColor(g.status)}'><b>${g.key}</b> ${this.wrapPhraseWithSpan(g.step)} <span class='step-time small'>(${g.time})</span>
         ${g.table ? g.table.map(r => `<div class='step-data small'><pre>${r}</pre></div>`).join('') : ``}
         ${g.log ? g.log.map(r => `<div class='step-logs small d-none'><pre>${lodash_1.default.escape(r)}</pre></div>`).join('') : ``}
         ${g.status === 'error'
@@ -81978,7 +81952,8 @@ class HtmlComponent {
                 ? `${this.listAttachments(result.attachmentFiles.filter(file => file.fileName.includes('screenshot')), false)}`
                 : ''}`
             : ''}    
-        </div>`).join('')}
+        </div>`)
+            .join('')}
         ${result.attachmentFiles ? `${this.listAttachments(result.attachmentFiles.filter(file => !file.fileName.includes('screenshot')))}` : ''}
       </div>
         `);
@@ -82046,11 +82021,6 @@ class HtmlComponent {
     }
 }
 exports.HtmlComponent = HtmlComponent;
-HtmlComponent.iconTotal = '🧾';
-HtmlComponent.iconPassed = '✅';
-HtmlComponent.iconFailed = '❌';
-HtmlComponent.iconIgnored = '⚪';
-HtmlComponent.iconRerun = '🔄';
 
 
 /***/ }),
@@ -82176,15 +82146,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
@@ -82195,28 +82156,26 @@ const test_result_preparing_class_1 = __nccwpck_require__(8998);
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            //Inputs
-            const trxDirPath = core.getInput('trxDirPath');
-            const attachmentDirPath = core.getInput('attachmentsDirPath');
-            const outputHtmlPath = core.getInput('outputHtmlPath');
-            const templatePath = './src/templates/template.html';
-            const trxFiles = yield fs_utils_class_1.FileUtils.findTrxFilesAsync(trxDirPath);
-            const attachmentFiles = yield fs_utils_class_1.FileUtils.findAttachmentFilesAsync(attachmentDirPath);
-            const unitTestResults = yield test_result_preparing_class_1.TestResultPreparing.prepareUnitTestResult(trxFiles, attachmentFiles);
-            const summaryDomainResult = test_result_preparing_class_1.TestResultPreparing.prepareDomainSummaryResult(unitTestResults);
-            const summaryResult = test_result_preparing_class_1.TestResultPreparing.prepareSummaryResult(unitTestResults, summaryDomainResult);
-            const htmlContent = html_generator_class_1.HtmlGenerator.generateHTML(summaryResult, summaryDomainResult, unitTestResults, templatePath);
-            html_generator_class_1.HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
-        }
-        catch (error) {
-            // Fail the workflow run if an error occurs
-            if (error instanceof Error)
-                core.setFailed(error.message);
-        }
-    });
+async function run() {
+    try {
+        //Inputs
+        const trxDirPath = core.getInput('trxDirPath');
+        const attachmentDirPath = core.getInput('attachmentsDirPath');
+        const outputHtmlPath = core.getInput('outputHtmlPath');
+        const templatePath = './src/templates/template.html';
+        const trxFiles = await fs_utils_class_1.FileUtils.findTrxFilesAsync(trxDirPath);
+        const attachmentFiles = await fs_utils_class_1.FileUtils.findAttachmentFilesAsync(attachmentDirPath);
+        const unitTestResults = await test_result_preparing_class_1.TestResultPreparing.prepareUnitTestResult(trxFiles, attachmentFiles);
+        const summaryDomainResult = test_result_preparing_class_1.TestResultPreparing.prepareDomainSummaryResult(unitTestResults);
+        const summaryResult = test_result_preparing_class_1.TestResultPreparing.prepareSummaryResult(unitTestResults, summaryDomainResult);
+        const htmlContent = html_generator_class_1.HtmlGenerator.generateHTML(summaryResult, summaryDomainResult, unitTestResults, templatePath);
+        html_generator_class_1.HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
+    }
+    catch (error) {
+        // Fail the workflow run if an error occurs
+        if (error instanceof Error)
+            core.setFailed(error.message);
+    }
 }
 exports.run = run;
 
@@ -82228,15 +82187,6 @@ exports.run = run;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -82246,18 +82196,16 @@ const moment_1 = __importDefault(__nccwpck_require__(9623));
 const attachment_file_base64_class_1 = __nccwpck_require__(1149);
 const trx_parser_class_1 = __nccwpck_require__(4057);
 class TestResultPreparing {
-    static prepareUnitTestResult(trxFiles, attachmentFiles) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let unitTestResults = [];
-            for (const trxFilePath of trxFiles) {
-                const trxTests = yield trx_parser_class_1.TrxParser.parseTRXFileAsync(trxFilePath);
-                unitTestResults = unitTestResults.concat(trxTests);
-            }
-            unitTestResults = yield attachment_file_base64_class_1.AttachmentFilesBase64.addAttachmentFilesAsync(unitTestResults, attachmentFiles);
-            unitTestResults =
-                TestResultPreparing.sortAndFilterUniqueTests(unitTestResults);
-            return unitTestResults;
-        });
+    static async prepareUnitTestResult(trxFiles, attachmentFiles) {
+        let unitTestResults = [];
+        for (const trxFilePath of trxFiles) {
+            const trxTests = await trx_parser_class_1.TrxParser.parseTRXFileAsync(trxFilePath);
+            unitTestResults = unitTestResults.concat(trxTests);
+        }
+        unitTestResults = await attachment_file_base64_class_1.AttachmentFilesBase64.addAttachmentFilesAsync(unitTestResults, attachmentFiles);
+        unitTestResults =
+            TestResultPreparing.sortAndFilterUniqueTests(unitTestResults);
+        return unitTestResults;
     }
     static prepareSummaryResult(unitTestResults, summaryDomainResult) {
         const summaryResult = {
@@ -82382,15 +82330,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -82401,83 +82340,81 @@ const xml2js_1 = __nccwpck_require__(6189);
 const moment_1 = __importDefault(__nccwpck_require__(9623));
 const gherkin_logs_class_1 = __nccwpck_require__(7771);
 class TrxParser {
-    static parseTRXFileAsync(trxFilePath) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => {
-                fs.readFile(trxFilePath, 'utf-8', (readFileError, trxFileContent) => {
-                    if (readFileError) {
-                        reject(readFileError);
+    static async parseTRXFileAsync(trxFilePath) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(trxFilePath, 'utf-8', (readFileError, trxFileContent) => {
+                if (readFileError) {
+                    reject(readFileError);
+                    return;
+                }
+                (0, xml2js_1.parseString)(trxFileContent, (parseErr, result) => {
+                    if (parseErr) {
+                        reject(parseErr);
                         return;
                     }
-                    (0, xml2js_1.parseString)(trxFileContent, (parseErr, result) => {
-                        if (parseErr) {
-                            reject(parseErr);
-                            return;
-                        }
-                        const unitTestResults = [];
-                        if (result &&
-                            result.TestRun &&
-                            result.TestRun.Results &&
-                            result.TestRun.Results[0] &&
-                            result.TestRun.Results[0].UnitTestResult &&
-                            result.TestRun.TestDefinitions &&
-                            result.TestRun.TestDefinitions[0].UnitTest &&
-                            result.TestRun.TestDefinitions[0].UnitTest[0].TestMethod) {
-                            const testResults = result.TestRun.Results[0].UnitTestResult;
-                            for (const testResult of testResults) {
-                                let output;
-                                try {
-                                    output = testResult.Output[0].StdOut[0];
-                                }
-                                catch (error) {
-                                    output = testResult.Output[0].ErrorInfo[0].Message[0];
-                                }
-                                let err;
-                                try {
-                                    err = testResult.Output[0].ErrorInfo[0].Message[0];
-                                }
-                                catch (error) {
-                                    err = '';
-                                }
-                                const testId = testResult.$.testId;
-                                const testDefinitions = result.TestRun.TestDefinitions[0];
-                                const unitTest = testDefinitions.UnitTest.find(
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                (test) => test.$.id === testId);
-                                const className = unitTest.TestMethod[0].$.className;
-                                const parts = className.split('.');
-                                const testDomain = parts[parts.length - 2];
-                                const featurName = parts[parts.length - 1]
-                                    .replace('_', ' - ')
-                                    .replace('Feature', '');
-                                const testDomainStartTime = (0, moment_1.default)(result.TestRun.Times[0].$.start).toDate();
-                                const testDomainEndTime = (0, moment_1.default)(result.TestRun.Times[0].$.finish).toDate();
-                                unitTestResults.push({
-                                    testId,
-                                    testDomainStartTime,
-                                    testDomainEndTime,
-                                    testDomain,
-                                    featureName: featurName,
-                                    testFullName: testResult.$.testName,
-                                    testName: this.parseTestName(testResult.$.testName),
-                                    testParameters: this.parseTestParameters(testResult.$.testName),
-                                    outcome: testResult.$.outcome === 'NotExecuted'
-                                        ? 'Ignored'
-                                        : testResult.$.outcome,
-                                    duration: this.convertTimeToSeconds(testResult.$.duration),
-                                    startTime: (0, moment_1.default)(testResult.$.endTime)
-                                        .subtract(this.convertTimeToSeconds(testResult.$.duration), 'seconds')
-                                        .toDate(),
-                                    endTime: (0, moment_1.default)(testResult.$.endTime).toDate(),
-                                    stdout: output,
-                                    gherkinLogs: gherkin_logs_class_1.GherkinLogs.parseGherkinLogs(output),
-                                    errMsg: err,
-                                    rerun: false
-                                });
+                    const unitTestResults = [];
+                    if (result &&
+                        result.TestRun &&
+                        result.TestRun.Results &&
+                        result.TestRun.Results[0] &&
+                        result.TestRun.Results[0].UnitTestResult &&
+                        result.TestRun.TestDefinitions &&
+                        result.TestRun.TestDefinitions[0].UnitTest &&
+                        result.TestRun.TestDefinitions[0].UnitTest[0].TestMethod) {
+                        const testResults = result.TestRun.Results[0].UnitTestResult;
+                        for (const testResult of testResults) {
+                            let output;
+                            try {
+                                output = testResult.Output[0].StdOut[0];
                             }
+                            catch (error) {
+                                output = testResult.Output[0].ErrorInfo[0].Message[0];
+                            }
+                            let err;
+                            try {
+                                err = testResult.Output[0].ErrorInfo[0].Message[0];
+                            }
+                            catch (error) {
+                                err = '';
+                            }
+                            const testId = testResult.$.testId;
+                            const testDefinitions = result.TestRun.TestDefinitions[0];
+                            const unitTest = testDefinitions.UnitTest.find(
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (test) => test.$.id === testId);
+                            const className = unitTest.TestMethod[0].$.className;
+                            const parts = className.split('.');
+                            const testDomain = parts[parts.length - 2];
+                            const featurName = parts[parts.length - 1]
+                                .replace('_', ' - ')
+                                .replace('Feature', '');
+                            const testDomainStartTime = (0, moment_1.default)(result.TestRun.Times[0].$.start).toDate();
+                            const testDomainEndTime = (0, moment_1.default)(result.TestRun.Times[0].$.finish).toDate();
+                            unitTestResults.push({
+                                testId,
+                                testDomainStartTime,
+                                testDomainEndTime,
+                                testDomain,
+                                featureName: featurName,
+                                testFullName: testResult.$.testName,
+                                testName: this.parseTestName(testResult.$.testName),
+                                testParameters: this.parseTestParameters(testResult.$.testName),
+                                outcome: testResult.$.outcome === 'NotExecuted'
+                                    ? 'Ignored'
+                                    : testResult.$.outcome,
+                                duration: this.convertTimeToSeconds(testResult.$.duration),
+                                startTime: (0, moment_1.default)(testResult.$.endTime)
+                                    .subtract(this.convertTimeToSeconds(testResult.$.duration), 'seconds')
+                                    .toDate(),
+                                endTime: (0, moment_1.default)(testResult.$.endTime).toDate(),
+                                stdout: output,
+                                gherkinLogs: gherkin_logs_class_1.GherkinLogs.parseGherkinLogs(output),
+                                errMsg: err,
+                                rerun: false
+                            });
                         }
-                        resolve(unitTestResults);
-                    });
+                    }
+                    resolve(unitTestResults);
                 });
             });
         });
@@ -82541,7 +82478,7 @@ module.exports = require("buffer");
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("child_process");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("child_process");
 
 /***/ }),
 
@@ -82589,7 +82526,7 @@ module.exports = require("fs");
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("fs/promises");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
 
 /***/ }),
 
@@ -82709,7 +82646,7 @@ module.exports = require("string_decoder");
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("timers");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("timers");
 
 /***/ }),
 
