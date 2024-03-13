@@ -210,10 +210,15 @@ export class HtmlComponent {
     showHaeading = true
   ): string {
     let text = ''
+    const prefix = 'data:image/png;base64,'
+
     for (const attachment of attachments) {
+      const src = attachment.base64Data.startsWith(prefix)
+        ? attachment.base64Data
+        : prefix + attachment.base64Data
       attachment.fileType.startsWith('image')
         ? (text += `<li>
-          <img src="data:image/png;base64,${attachment.base64Data}" alt="${attachment.fileName}">
+          <img src="${src}" alt="${attachment.fileName}">
           </li>`)
         : (text += `<li>
           Download file: <a href="data:application/octet-stream;base64,${attachment.base64Data}" download="${attachment.fileName}">${attachment.fileName}</a>

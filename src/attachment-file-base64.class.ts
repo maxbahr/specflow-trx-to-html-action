@@ -70,8 +70,7 @@ export class AttachmentFilesBase64 {
     const fileName = path.basename(filePath)
     const type = this.getFileType(filePath)
     if (type.startsWith('image')) {
-      const resizedData = await this.resizeImageAsync(data, imgWidth, imgHeight)
-      const base64Data = Buffer.from(resizedData).toString('base64')
+      const base64Data = await this.resizeImageAsync(data, imgWidth, imgHeight)
       return { filePath, fileName, base64Data, fileType: type }
     } else {
       const base64Data = Buffer.from(data).toString('base64')
@@ -94,8 +93,10 @@ export class AttachmentFilesBase64 {
       const { width, height } = image.bitmap
       let resizedImage
       if (width > height) {
+        w = width > w ? w : width
         resizedImage = image.resize(w, Jimp.AUTO)
       } else {
+        h = height > h ? h : height
         resizedImage = image.resize(Jimp.AUTO, h)
       }
       return await resizedImage.getBase64Async(Jimp.AUTO)
