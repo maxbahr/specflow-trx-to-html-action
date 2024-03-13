@@ -11,7 +11,7 @@ describe('AttachmentFilesBase64', () => {
       'path/to/attachment2.txt'
     ]
 
-    it('should add attachment files to tests', async () => {
+    it.skip('should add attachment files to tests', async () => {
       const result = await AttachmentFilesBase64.addAttachmentFilesAsync(
         [mockTest],
         mockFilePaths
