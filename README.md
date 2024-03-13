@@ -1,4 +1,4 @@
-# Specflow Trx to Html Report
+# Specflow Trx to HTML Report
 
 [![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
@@ -6,7 +6,7 @@
 [![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
-Parse specflow dotnet trx files and generate html report with gherkin steps and
+Parse specflow dotnet trx files and generate HTML report with gherkin steps and
 attachments.
 
 **Author:** Maksymilian Bahr <maks.bahr@gmail.com>
