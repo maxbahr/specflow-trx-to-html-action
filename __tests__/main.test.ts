@@ -52,7 +52,6 @@ describe('action', () => {
         console.error('Folder not deleted', err)
         return
       }
-      console.log('Folder deleted')
     })
   })
 
