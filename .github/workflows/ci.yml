@@ -60,7 +60,3 @@ jobs:
           trxDirPath: './trx'
           attachmentsDirPath: './attachments'
           outputHtmlPath: 'output/results.html'
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"

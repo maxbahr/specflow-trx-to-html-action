@@ -270,10 +270,10 @@
           <div class="row">
             <div class="col">
               <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelectDomain"
+                <label class="input-group-text" for="input-group-select-domain"
                   >Domain</label
                 >
-                <select class="form-select" id="inputGroupSelectDomain">
+                <select class="form-select" id="input-group-select-domain">
                   <option selected>Choose...</option>
                   ##domainFilterOptions##
                 </select>
@@ -281,10 +281,10 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelectFeature"
+                <label class="input-group-text" for="input-group-select-feature"
                   >Feature</label
                 >
-                <select class="form-select" id="inputGroupSelectFeature">
+                <select class="form-select" id="input-group-select-feature">
                   <option selected>Choose...</option>
                   ##featureFilterOptions##
                 </select>
@@ -312,13 +312,13 @@
           <div class="row">
             <div class="col-8">
               <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupText"
+                <label class="input-group-text" for="input-group-text"
                   >Search by Title</label
                 >
                 <input
                   type="text"
                   class="form-control"
-                  id="inputGroupText"
+                  id="input-group-text"
                   aria-label="Search by text" />
               </div>
             </div>
@@ -351,9 +351,9 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="modalTestResults"
+      id="modal-test-results"
       tabindex="-1"
-      aria-labelledby="modalTestResults"
+      aria-labelledby="modal-test-results"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90%">
         <div class="modal-content">
@@ -370,8 +370,13 @@
           <div id="modal-body" class="modal-body"></div>
           <div class="modal-footer d-flex justify-content-between">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="toggleLogs" />
-              <label class="form-check-label" for="toggleLogs">Show logs</label>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="toggle-logs" />
+              <label class="form-check-label" for="toggle-logs"
+                >Show logs</label
+              >
             </div>
             <button
               type="button"
@@ -386,7 +391,7 @@
 
     <!--Scripts-->
     <script>
-      const exampleModal = document.getElementById('modalTestResults')
+      const exampleModal = document.getElementById('modal-test-results')
       exampleModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget
         const start = button.getAttribute('data-bs-start')
@@ -428,30 +433,35 @@
       `
 
         //reset toggle
-        document.getElementById('toggleLogs').checked = false
+        document.getElementById('toggle-logs').checked = false
       })
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        var toggleLogs = document.getElementById('toggleLogs')
+        var toggleLogs = document.getElementById('toggle-logs')
 
-        toggleLogs.addEventListener('change', function () {
-          var elementsToToggles = document.querySelectorAll('.step-logs')
-          elementsToToggles.forEach(elementsToToggle => {
-            if (toggleLogs.checked) {
-              elementsToToggle.classList.remove('d-none')
-            } else {
-              elementsToToggle.classList.add('d-none')
-            }
+        toggle -
+          logs.addEventListener('change', function () {
+            var elementsToToggles = document.querySelectorAll('.step-logs')
+            elementsToToggles.forEach(elementsToToggle => {
+              if (toggleLogs.checked) {
+                elementsToToggle.classList.remove('d-none')
+              } else {
+                elementsToToggle.classList.add('d-none')
+              }
+            })
           })
-        })
       })
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        const domainSelect = document.getElementById('inputGroupSelectDomain')
-        const featureSelect = document.getElementById('inputGroupSelectFeature')
-        const searchText = document.getElementById('inputGroupText')
+        const domainSelect = document.getElementById(
+          'input-group-select-domain'
+        )
+        const featureSelect = document.getElementById(
+          'input-group-select-feature'
+        )
+        const searchText = document.getElementById('input-group-text')
         const passedCheckbox = document.getElementById('btn-check-passed')
         const failedCheckbox = document.getElementById('btn-check-failed')
         const ignoredCheckbox = document.getElementById('btn-check-ignored')
@@ -516,9 +526,9 @@
 
       function clearForm() {
         const elements = [
-          'inputGroupSelectDomain',
-          'inputGroupSelectFeature',
-          'inputGroupText',
+          'input-group-select-domain',
+          'input-group-select-feature',
+          'input-group-text',
           'btn-check-passed',
           'btn-check-failed',
           'btn-check-ignored',

@@ -81579,7 +81579,7 @@ class FileUtils {
             return trxFiles;
         }
         catch (error) {
-            console.error('Error while reading folder:', error);
+            console.error(`Error while reading folder ${folderPath}:`, error);
             return [];
         }
     }
@@ -81606,7 +81606,7 @@ class FileUtils {
             return trxFiles;
         }
         catch (error) {
-            console.error('Error while reading folder:', error);
+            console.error(`Error while reading folder ${folderPath}:`, error);
             return [];
         }
     }

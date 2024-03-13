@@ -43,7 +43,7 @@ export class FileUtils {
       await findFilesRecursively(folderPath)
       return trxFiles
     } catch (error) {
-      console.error('Error while reading folder:', error)
+      console.error(`Error while reading folder ${folderPath}:`, error)
       return []
     }
   }
@@ -75,7 +75,7 @@ export class FileUtils {
       await findFilesRecursively(folderPath)
       return trxFiles
     } catch (error) {
-      console.error('Error while reading folder:', error)
+      console.error(`Error while reading folder ${folderPath}:`, error)
       return []
     }
   }
