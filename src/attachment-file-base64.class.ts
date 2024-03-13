@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs/promises'
-import sharp from 'sharp'
+import Jimp from 'jimp'
 import mime from 'mime-types'
 import { IUnitTestResult } from './interfaces/unit-test-result.type'
 import { IAttachmentBase64 } from './interfaces/attachment-base64.type'
@@ -53,10 +53,10 @@ export class AttachmentFilesBase64 {
     const normalizedPath2 = path.normalize(path2).split(path.sep)
     const matchFileName =
       normalizedPath1[normalizedPath1.length - 1] ===
-      normalizedPath2[normalizedPath2.length - 1] //fileName
+      normalizedPath2[normalizedPath2.length - 1] // fileName
     const matchSubfolder =
       normalizedPath1[normalizedPath1.length - 2] ===
-      normalizedPath2[normalizedPath2.length - 2] //subfolder
+      normalizedPath2[normalizedPath2.length - 2] // subfolder
     return matchFileName && matchSubfolder
   }
 
@@ -86,9 +86,22 @@ export class AttachmentFilesBase64 {
 
   private static async resizeImageAsync(
     data: Buffer,
-    width: number,
-    height: number
-  ): Promise<Buffer> {
-    return await sharp(data).resize({ width, height, fit: 'inside' }).toBuffer()
+    w: number,
+    h: number
+  ): Promise<string> {
+    try {
+      const image = await Jimp.read(data)
+      const { width, height } = image.bitmap
+      let resizedImage
+      if (width > height) {
+        resizedImage = image.resize(w, Jimp.AUTO)
+      } else {
+        resizedImage = image.resize(Jimp.AUTO, h)
+      }
+      return await resizedImage.getBase64Async(Jimp.AUTO)
+    } catch (err) {
+      console.error('Error while resizing:', err)
+      throw err
+    }
   }
 }

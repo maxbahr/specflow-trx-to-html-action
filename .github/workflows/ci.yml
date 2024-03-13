@@ -60,10 +60,10 @@ jobs:
           trxDirPath: './__tests__/trx'
           attachmentsDirPath: './__tests__/attachments'
           outputHtmlPath: 'output/results.html'
-  
+
       - name: Publish Test Results
         uses: actions/upload-artifact@v3
         with:
           name: 'Test Report'
           path: ./output/results.html
-        continue-on-error: true          
+        continue-on-error: true
