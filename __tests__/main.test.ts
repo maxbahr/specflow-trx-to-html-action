@@ -47,7 +47,7 @@ describe('action', () => {
 
     // Verify that all of the core library functions were called correctly
     expect(errorMock).not.toHaveBeenCalled()
-    fs.rmdir('__tests__/output', { recursive: true }, err => {
+    fs.rm('__tests__/output', { recursive: true }, err => {
       if (err) {
         console.error('Folder not deleted', err)
         return

@@ -25,7 +25,9 @@ export class AttachmentFilesBase64 {
             if (filePath) {
               let fileBase64
               try {
-                fileBase64 = await this.convertFileToBase64Async(filePath)
+                fileBase64 = await this.convertFileToBase64Async(
+                  path.normalize(filePath)
+                )
               } catch (error) {
                 console.error(
                   `Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`,
