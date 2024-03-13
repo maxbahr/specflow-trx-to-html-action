@@ -3,6 +3,10 @@ import * as fs from 'fs'
 
 export class FileUtils {
   static createDirectories(filePath: string): void {
+    if (!this.isValidPath(filePath)) {
+      throw new Error(`'${filePath}' is not valid file path`)
+    }
+
     const directoryPath = path.dirname(filePath)
 
     if (!fs.existsSync(directoryPath)) {
@@ -11,6 +15,11 @@ export class FileUtils {
   }
 
   static async findTrxFilesAsync(folderPath: string): Promise<string[]> {
+    if (!this.isValidPath(folderPath)) {
+      throw new Error(
+        `'${folderPath}' is not valid folder path. Should include path separator`
+      )
+    }
     const trxFiles: string[] = []
 
     async function findFilesRecursively(currentPath: string): Promise<void> {
@@ -40,6 +49,11 @@ export class FileUtils {
   }
 
   static async findAttachmentFilesAsync(folderPath: string): Promise<string[]> {
+    if (!this.isValidPath(folderPath)) {
+      throw new Error(
+        `'${folderPath}' is not valid folder path. Should include path separator`
+      )
+    }
     const trxFiles: string[] = []
 
     async function findFilesRecursively(currentPath: string): Promise<void> {
@@ -63,6 +77,15 @@ export class FileUtils {
     } catch (error) {
       console.error('Error while reading folder:', error)
       return []
+    }
+  }
+
+  private static isValidPath(filePath: string): boolean {
+    try {
+      const stats = path.normalize(filePath).includes(path.sep)
+      return stats
+    } catch (error) {
+      return false
     }
   }
 }

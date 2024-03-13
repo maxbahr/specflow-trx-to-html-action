@@ -7,7 +7,7 @@ describe('AttachmentFilesBase64', () => {
     const mockTest: IUnitTestResult = mockUnitTestResult
 
     const mockFilePaths = [
-      'attachments/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png',
+      '__tests__/attachments/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png',
       'path/to/attachment2.txt'
     ]
 
