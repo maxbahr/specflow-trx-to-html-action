@@ -62,13 +62,10 @@ describe('HtmlGenerator', () => {
         }
       ]
 
-      const templatePath = 'src/templates/template.html'
-
       const generatedHtml = HtmlGenerator.generateHTML(
         summaryResult,
         summaryDomainResult,
-        results,
-        templatePath
+        results
       )
 
       expect(typeof generatedHtml).toBe('string')

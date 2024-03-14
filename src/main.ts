@@ -18,7 +18,6 @@ export async function run(): Promise<void> {
     const outputHtmlPath =
       core.getInput('outputHtmlPath') || 'output/result.html'
 
-    const templatePath = './src/templates/template.html'
     const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath)
     const attachmentFiles =
       await FileUtils.findAttachmentFilesAsync(attachmentDirPath)
@@ -34,8 +33,7 @@ export async function run(): Promise<void> {
     const htmlContent = HtmlGenerator.generateHTML(
       summaryResult,
       summaryDomainResult,
-      unitTestResults,
-      templatePath
+      unitTestResults
     )
     HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, true)
   } catch (error) {

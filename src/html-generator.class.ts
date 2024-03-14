@@ -4,15 +4,15 @@ import { IUnitTestResult } from './interfaces/unit-test-result.type'
 import { ISummaryResult } from './interfaces/summary-result.type'
 import { FileUtils } from './fs-utils.class'
 import { HtmlComponent } from './html-component.class'
+import { htmlTemplate } from './html-template'
 
 export class HtmlGenerator {
   static generateHTML(
     summaryResult: ISummaryResult,
     summaryDomainResult: ISummaryResult[],
-    results: IUnitTestResult[],
-    templatePath: string
+    results: IUnitTestResult[]
   ): string {
-    let htmlContent: string = fs.readFileSync(templatePath, 'utf-8')
+    let htmlContent: string = htmlTemplate
     let iterator = 0
     let testTableContent = ''
     let domainSummaryTableContent = ''
