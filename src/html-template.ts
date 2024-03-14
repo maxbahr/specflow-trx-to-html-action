@@ -325,7 +325,7 @@ export const htmlTemplate = `<!DOCTYPE html>
   
   
     <!-- Modal -->
-    <div class="modal fade" id="modalTestResults" tabindex="-1" aria-labelledby="modalTestResults" aria-hidden="true">
+    <div class="modal fade" id="modal-test-results" tabindex="-1" aria-labelledby="modal-test-results" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90%">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -348,7 +348,7 @@ export const htmlTemplate = `<!DOCTYPE html>
   
     <!--Scripts-->
     <script>
-      const exampleModal = document.getElementById('modalTestResults')
+      const exampleModal = document.getElementById('modal-test-results')
       exampleModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
         const start = button.getAttribute('data-bs-start');
