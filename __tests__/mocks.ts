@@ -1,5 +1,5 @@
-import { IUnitTestResult } from '../src/interfaces/unit-test-result.type'
-import { ISummaryResult } from '../src/interfaces/summary-result.type'
+import { IUnitTestResult } from '../src/interfaces/unit-test-result.type';
+import { ISummaryResult } from '../src/interfaces/summary-result.type';
 
 export const mockUnitTestResult: IUnitTestResult = {
   testId: '1',
@@ -22,9 +22,7 @@ export const mockUnitTestResult: IUnitTestResult = {
       status: 'passed',
       time: '2024-03-12T10:06:00Z',
       log: ['Step passed successfully'],
-      attachments: [
-        'B2C_SignInAndSignUp\\SignUp_2024_12_3__05_13_24_113\\20240312_051645_screenshot.png'
-      ]
+      attachments: ['B2C_SignInAndSignUp\\SignUp_2024_12_3__05_13_24_113\\20240312_051645_screenshot.png']
     },
     {
       key: '2',
@@ -44,7 +42,7 @@ export const mockUnitTestResult: IUnitTestResult = {
   ],
   errMsg: null,
   rerun: false
-}
+};
 
 export const mockSummaryResult: ISummaryResult = {
   domain: 'Example Domain',
@@ -55,7 +53,7 @@ export const mockSummaryResult: ISummaryResult = {
   duration: 30000, // duration in milliseconds
   startDate: new Date('2024-03-12T09:00:00Z'),
   endDate: new Date('2024-03-12T09:30:00Z')
-}
+};
 
 export const mockTrxParsedResult: IUnitTestResult[] = [
   {
@@ -374,13 +372,10 @@ export const mockTrxParsedResult: IUnitTestResult[] = [
           '-> skipped because of previous errors',
           "-> Attachment '/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png' added (not forwarded to the test runner)."
         ],
-        attachments: [
-          '/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png'
-        ]
+        attachments: ['/TestData/B2C_SignInAndSignUp/SignUp_2024_12_3__05_13_24_113/20240312_051645_screenshot.png']
       }
     ],
-    errMsg:
-      'System.Exception : There is no email with Verify your Email Address after 3/12/2024 5:13:38 AM',
+    errMsg: 'System.Exception : There is no email with Verify your Email Address after 3/12/2024 5:13:38 AM',
     rerun: false
   },
   {
@@ -522,4 +517,4 @@ export const mockTrxParsedResult: IUnitTestResult[] = [
     errMsg: '',
     rerun: false
   }
-]
+];

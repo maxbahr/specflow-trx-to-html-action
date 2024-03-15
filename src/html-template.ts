@@ -1,8 +1,7 @@
-export const htmlTemplate = `<!DOCTYPE html>
-  <html lang="en">
-  
-  <head>
-    <title>Test Results</title>
+import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
+
+const htmlHeader = `<head>
+    <title>##report_title##</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Maksymilian Bahr">
@@ -17,7 +16,7 @@ export const htmlTemplate = `<!DOCTYPE html>
         vertical-align: middle;
       }
   
-      h1, h2 {
+      h2 {
         margin-top: 3rem;
       }
   
@@ -221,21 +220,18 @@ export const htmlTemplate = `<!DOCTYPE html>
       }
   
     </style>
-  </head>
-  
-  <body>
-    <div class="container">
-      <h1>Automation Test Report</h1>
-      <div class="container pt-3">
-        <h2>Execution Summary</h2>
+  </head>`;
+
+const htmlExecutionSummary = `<div class="container pt-3">
+        <h2 style="margin-top: 1rem;">Execution Summary</h2>
         <div class="row">
           <div class="col container-wrapper">
             ##summary_rows##
           </div>        
         </div>
-      </div>
-  
-      <div class="container pt-3">
+      </div>`;
+
+const htmlDomainTestSummary = `<div class="container pt-3">
         <h2>Domain Test Summary</h2>
           <div class="row">
             <div class="col container-wrapper">
@@ -257,9 +253,9 @@ export const htmlTemplate = `<!DOCTYPE html>
               </table>
             </div>
           </div>
-      </div>
-  
-      <div class="container pt-3">
+      </div>`;
+
+const htmlTestResults = `<div class="container pt-3">
         <h2>Test Results</h2>      
         <div class="container container-wrapper" style="padding-top: 15px;">
           <div class="row">
@@ -320,11 +316,10 @@ export const htmlTemplate = `<!DOCTYPE html>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-  
-  
-    <!-- Modal -->
+      </div>`;
+
+function htmlModal(noLogs: boolean): string {
+  return `<!-- Modal -->
     <div class="modal fade" id="modal-test-results" tabindex="-1" aria-labelledby="modal-test-results" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90%">
         <div class="modal-content">
@@ -337,17 +332,25 @@ export const htmlTemplate = `<!DOCTYPE html>
           <div id="modal-body" class="modal-body"></div>
           <div class="modal-footer d-flex justify-content-between">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="toggleLogs">
+              <input class="form-check-input" type="checkbox" id="toggleLogs" ${noLogs ? 'disabled' : ''}>
               <label class="form-check-label" for="toggleLogs">Show logs</label>
             </div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
-    </div>
-  
-    <!--Scripts-->
-    <script>
+    </div>`;
+}
+
+const htmlScriptsBootstrap = `<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+  });
+</script>
+`;
+const htmlScriptsTestResults = `<script>
       const exampleModal = document.getElementById('modal-test-results')
       exampleModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
@@ -483,15 +486,33 @@ export const htmlTemplate = `<!DOCTYPE html>
             }          
         });
       }
-  
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl)
-      });
-    </script>
+
+    </script>`;
+
+export function getHtmlTemplate(parameters: IHtmlGeneratorParameters): string {
+  return `<!DOCTYPE html>
+  <html lang="en">
+  ${htmlHeader}
+  <body>
+  <div class="container">
+    <div class="row">
+      <div class="col-10 d-flex align-items-center"><h1>##report_title_h1##</h1></div>
+      ${
+        typeof parameters.projectLogoSrc === 'string'
+          ? `<div class="col-2 d-flex align-items-center justify-content-end"><img width="150px" alt="Project Logo" class="projectLogo" src="${parameters.projectLogoSrc}"></div>`
+          : ''
+      }
+    </div>
+    ${htmlExecutionSummary}
+    ${htmlDomainTestSummary}
+    ${parameters.onlySummary ? '' : htmlTestResults}
+  </div>
+  <!--Modal-->
+  ${parameters.onlySummary ? '' : htmlModal(parameters.noLogs)}
+  <!--Scripts-->
+  ${parameters.onlySummary ? '' : htmlScriptsTestResults}
+  ${htmlScriptsBootstrap}
   </body>
   </html>
-  `
+  `;
+}

@@ -1,4 +1,4 @@
-import { GherkinLogs } from '../src/gherkin-logs.class'
+import { GherkinLogs } from '../src/gherkin-logs.class';
 
 describe('GherkinLogs', () => {
   describe('parseGherkinLogs', () => {
@@ -19,9 +19,9 @@ Given step 5
 | Col1 | Col2 |
 | Val1 | Val2 |
 -> done: finished (5.5s)
--> after logs`
+-> after logs`;
 
-      const parsedLogs = GherkinLogs.parseGherkinLogs(logs)
+      const parsedLogs = GherkinLogs.parseGherkinLogs(logs);
 
       expect(parsedLogs).toEqual([
         {
@@ -67,11 +67,7 @@ Given step 5
           status: 'done',
           time: '5.5s',
           log: ['-> done: finished (5.5s)'],
-          table: [
-            '--- table step argument ---',
-            '| Col1 | Col2 |',
-            '| Val1 | Val2 |'
-          ]
+          table: ['--- table step argument ---', '| Col1 | Col2 |', '| Val1 | Val2 |']
         },
         {
           key: 'Hook',
@@ -80,7 +76,7 @@ Given step 5
           time: '0.0s',
           log: ['-> after logs']
         }
-      ])
-    })
-  })
-})
+      ]);
+    });
+  });
+});

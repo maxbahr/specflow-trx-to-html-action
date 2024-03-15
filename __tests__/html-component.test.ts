@@ -1,7 +1,7 @@
-import { HtmlComponent } from '../src/html-component.class'
-import { IUnitTestResult } from '../src/interfaces/unit-test-result.type'
-import { mockUnitTestResult } from './mocks'
-import { ISummaryResult } from '../src/interfaces/summary-result.type'
+import { HtmlComponent } from '../src/html-component.class';
+import { IUnitTestResult } from '../src/interfaces/unit-test-result.type';
+import { mockUnitTestResult } from './mocks';
+import { ISummaryResult } from '../src/interfaces/summary-result.type';
 
 describe('HtmlComponent', () => {
   describe('summaryTableComponent', () => {
@@ -15,30 +15,25 @@ describe('HtmlComponent', () => {
         duration: 3600,
         startDate: new Date(),
         endDate: new Date()
-      }
+      };
 
-      const results: IUnitTestResult[] = []
-      const htmlString = HtmlComponent.summaryTableComponent(
-        summaryResult,
-        results
-      )
+      const results: IUnitTestResult[] = [];
+      const htmlString = HtmlComponent.summaryTableComponent(summaryResult, results);
 
-      expect(htmlString).toContain(
-        '<div class="row align-items-center row-summary">'
-      )
-    })
-  })
+      expect(htmlString).toContain('<div class="row align-items-center row-summary">');
+    });
+  });
 
   describe('testResultComponent', () => {
     test('should return HTML string for test result', () => {
-      const result: IUnitTestResult = mockUnitTestResult
-      const iterator = 1
+      const result: IUnitTestResult = mockUnitTestResult;
+      const iterator = 1;
 
-      const htmlString = HtmlComponent.testResultComponent(result, iterator)
+      const htmlString = HtmlComponent.testResultComponent(result, iterator, false);
 
-      expect(htmlString).toContain('<tr class="table-row"')
-    })
-  })
+      expect(htmlString).toContain('<tr class="table-row"');
+    });
+  });
 
   describe('domainSummaryTableComponent', () => {
     test('should return HTML string for domain summary table', () => {
@@ -51,25 +46,22 @@ describe('HtmlComponent', () => {
         duration: 3600,
         startDate: new Date(),
         endDate: new Date()
-      }
+      };
 
-      const htmlString =
-        HtmlComponent.domainSummaryTableComponent(summaryResult)
+      const htmlString = HtmlComponent.domainSummaryTableComponent(summaryResult);
 
-      expect(htmlString).toContain('<tr>')
-    })
-  })
+      expect(htmlString).toContain('<tr>');
+    });
+  });
 
   describe('optionComponent', () => {
     test('should return HTML string for option component', () => {
-      const value = 'testValue'
-      const text = 'Test Text'
+      const value = 'testValue';
+      const text = 'Test Text';
 
-      const htmlString = HtmlComponent.optionComponent(value, text)
+      const htmlString = HtmlComponent.optionComponent(value, text);
 
-      expect(htmlString).toContain(
-        '<option value="testValue">Test Text</option>'
-      )
-    })
-  })
-})
+      expect(htmlString).toContain('<option value="testValue">Test Text</option>');
+    });
+  });
+});

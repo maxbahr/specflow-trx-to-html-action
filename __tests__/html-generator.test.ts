@@ -1,6 +1,7 @@
-import { HtmlGenerator } from '../src/html-generator.class'
-import { ISummaryResult } from '../src/interfaces/summary-result.type'
-import { IUnitTestResult } from '../src/interfaces/unit-test-result.type'
+import { HtmlGenerator } from '../src/html-generator.class';
+import { IHtmlGeneratorParameters } from '../src/interfaces/html-generator-param.type';
+import { ISummaryResult } from '../src/interfaces/summary-result.type';
+import { IUnitTestResult } from '../src/interfaces/unit-test-result.type';
 
 describe('HtmlGenerator', () => {
   describe('generateHTML', () => {
@@ -14,7 +15,7 @@ describe('HtmlGenerator', () => {
         duration: 3600,
         startDate: new Date(),
         endDate: new Date()
-      }
+      };
 
       const summaryDomainResult: ISummaryResult[] = [
         {
@@ -37,7 +38,7 @@ describe('HtmlGenerator', () => {
           startDate: new Date(),
           endDate: new Date()
         }
-      ]
+      ];
 
       const results: IUnitTestResult[] = [
         {
@@ -60,29 +61,30 @@ describe('HtmlGenerator', () => {
           testDomainEndTime: new Date(),
           testDomainStartTime: new Date()
         }
-      ]
+      ];
+      const htmlParameters: IHtmlGeneratorParameters = {
+        title: 'Automation Test',
+        heading: 'Automation Test Heading',
+        onlySummary: false,
+        noLogs: false,
+        projectLogoSrc: false
+      };
 
-      const generatedHtml = HtmlGenerator.generateHTML(
-        summaryResult,
-        summaryDomainResult,
-        results
-      )
+      const generatedHtml = HtmlGenerator.generateHTML(summaryResult, summaryDomainResult, results, htmlParameters);
 
-      expect(typeof generatedHtml).toBe('string')
-      expect(generatedHtml.length).toBeGreaterThan(0)
-      expect(generatedHtml).toContain(
-        '<div class="row align-items-center row-summary">'
-      )
-      expect(generatedHtml).toContain('TestDomain')
-      expect(generatedHtml).toContain('Test1')
-    })
-  })
+      expect(typeof generatedHtml).toBe('string');
+      expect(generatedHtml.length).toBeGreaterThan(0);
+      expect(generatedHtml).toContain('<div class="row align-items-center row-summary">');
+      expect(generatedHtml).toContain('TestDomain');
+      expect(generatedHtml).toContain('Test1');
+    });
+  });
 
   describe('saveHtml', () => {
     test.skip('should save HTML content correctly', () => {
-      const outputHTMLPath = 'sample/output.html'
-      const htmlContent = '<html><body><h1>Hello, World!</h1></body></html>'
-      const shouldMinify = false // For testing purposes, set to true if you want to test minification
+      const outputHTMLPath = 'sample/output.html';
+      const htmlContent = '<html><body><h1>Hello, World!</h1></body></html>';
+      const shouldMinify = false; // For testing purposes, set to true if you want to test minification
 
       // Mocking FileUtils.createDirectories
       //   const createDirectoriesMock = jest.spyOn(HtmlGenerator, 'createDirectories');
@@ -91,10 +93,10 @@ describe('HtmlGenerator', () => {
       //   const writeFileSyncMock = jest.spyOn(fs, 'writeFileSync');
       //   writeFileSyncMock.mockImplementation();
 
-      HtmlGenerator.saveHtml(outputHTMLPath, htmlContent, shouldMinify)
+      HtmlGenerator.saveHtml(outputHTMLPath, htmlContent, shouldMinify);
 
       //   expect(createDirectoriesMock).toHaveBeenCalledWith(outputHTMLPath);
       //   expect(writeFileSyncMock).toHaveBeenCalledWith(outputHTMLPath, htmlContent, 'utf-8');
-    })
-  })
-})
+    });
+  });
+});
