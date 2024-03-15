@@ -499,8 +499,10 @@ export async function getHtmlTemplate(parameters: IHtmlGeneratorParameters): Pro
     <div class="row">
       <div class="col-10 d-flex align-items-center"><h1>##report_title_h1##</h1></div>
       ${
-        typeof parameters.projectLogoSrc === 'string'
-          ? `<div class="col-2 d-flex align-items-center justify-content-end"><img width="150px" alt="Project Logo" class="projectLogo" src="${await getImageAsBase64(parameters.projectLogoSrc)}"></div>`
+        typeof parameters.projectLogoSrc === 'string' && parameters.projectLogoSrc.startsWith('http')
+          ? `<div class="col-2 d-flex align-items-center justify-content-end">
+                <img width="150px" alt="Project Logo" class="projectLogo" src="${await getImageAsBase64(parameters.projectLogoSrc)}">
+             </div>`
           : ''
       }
     </div>
@@ -529,7 +531,7 @@ async function getImageAsBase64(url: string): Promise<string> {
     const base64Data = imageBuffer.toString('base64');
     return prefix + base64Data;
   } catch (error) {
-    console.error(`Error fetching image from ${url}:`, error);
+    console.error(`Error fetching image from url: '${url}':`, error);
     throw error;
   }
 }
