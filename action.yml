@@ -47,7 +47,12 @@ inputs:
   projectLogoSrc:
     description: Specifies the URL of the image to be shown in the top right corner of the report.
     required: false
-    default: 'false'
+    default: 'undefined'
+
+  outputHtmlEmailPath:
+    description: Specifies the file path for the HTML file that will be generated for sending as email html body
+    required: false
+    default: 'undefined'
 
 runs:
   using: node20

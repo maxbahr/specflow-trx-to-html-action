@@ -21,8 +21,8 @@ export async function run(): Promise<void> {
     const reportTitle = core.getInput('reportTitle') || 'Automation Test Report';
     const onlySummary = core.getInput('onlySummary').toLowerCase() === 'true' || false;
     const noLogs = core.getInput('noLogs').toLowerCase() === 'true' || false;
-    const projectLogoSrc = core.getInput('projectLogoSrc') || false;
-    const outputHtmlEmailPath = core.getInput('outputHtmlEmailPath') || false;
+    const projectLogoSrc = core.getInput('projectLogoSrc') || undefined;
+    const outputHtmlEmailPath = core.getInput('outputHtmlEmailPath') || undefined;
 
     const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath);
     const isAttachmentPathSet = attachmentDirPath !== undefined && attachmentDirPath !== null;
@@ -50,7 +50,7 @@ export async function run(): Promise<void> {
       htmlParameters
     );
     HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
-    if (outputHtmlEmailPath && onlySummary) {
+    if (outputHtmlEmailPath !== undefined && onlySummary) {
       const imgBase64 = await HtmlScreenshot.getScreenshotHtmlBase64(outputHtmlEmailPath, htmlContent);
       const htmlWithImg = htmlEmailContent(imgBase64);
       HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlWithImg, false);

@@ -3,5 +3,5 @@ export interface IHtmlGeneratorParameters {
   heading: string;
   onlySummary: boolean;
   noLogs: boolean;
-  projectLogoSrc: string | false;
+  projectLogoSrc: string | undefined;
 }
