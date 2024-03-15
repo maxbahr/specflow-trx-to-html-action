@@ -521,7 +521,7 @@ export async function getHtmlTemplate(parameters: IHtmlGeneratorParameters): Pro
 async function getImageAsBase64(url: string): Promise<string> {
   const prefix = 'data:image/png;base64,';
   try {
-    const response = await fetch(url);
+    const response = await fetch(new URL(url));
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
     }
@@ -529,7 +529,7 @@ async function getImageAsBase64(url: string): Promise<string> {
     const base64Data = imageBuffer.toString('base64');
     return prefix + base64Data;
   } catch (error) {
-    console.error('Error fetching image:', error);
+    console.error(`Error fetching image from ${url}:`, error);
     throw error;
   }
 }
