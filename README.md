@@ -33,35 +33,33 @@ attachments associated with the test results.
 
 - **outputHtmlPath**:
 
-  - _Description:_ Specifies the file path for the HTML file that will be generated as a result of processing the test
+  - _Description:_ Specifies the file path for the HTML file that will be generated as a result of processing the test.
     results.
   - _Required:_ No
   - _Default:_ 'output/result.html'
 
 - **reportTitle**:
 
-  - _Description:_ Specifies the name of the report title and main heading. results.
+  - _Description:_ Specifies the name of the report title and main heading.
   - _Required:_ No
   - _Default:_ 'Automation Test Report'
 
 - **onlySummary**:
 
-  - _Description:_ Specifies whether to generate only execution and domain summary, excluding results of single tests.  
-    results.
+  - _Description:_ Specifies whether to generate only execution and domain summary, excluding results of single tests.
   - _Required:_ No
   - _Default:_ 'false'
 
 - **noLogs**:
 
   - _Description:_ Specifies whether to display tests with logs. If set to true, logs will not be included in the HTML
-    report and the log display toggle will be disabled. This reduces file size.  
-    results.
+    report and the log display toggle will be disabled. This reduces file size.
   - _Required:_ No
   - _Default:_ 'false'
 
 - **projectLogoSrc**:
 
-  - _Description:_ Specifies the URL of the image to be shown in the top right corner of the report. results.
+  - _Description:_ Specifies the URL of the image to be shown in the top right corner of the report.
   - _Required:_ No
   - _Default:_ 'false'
 
