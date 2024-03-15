@@ -90,7 +90,7 @@ describe('action', () => {
     expect(errorMock).not.toHaveBeenCalled();
   });
 
-  it('should generate html without only summary', async () => {
+  it('should generate html with only summary', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -144,6 +144,30 @@ describe('action', () => {
           return 'output/results.html';
         case 'projectLogoSrc':
           return 'https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png';
+        default:
+          return '';
+      }
+    });
+
+    await main.run();
+    expect(runMock).toHaveReturned();
+
+    // Verify that all of the core library functions were called correctly
+    expect(errorMock).not.toHaveBeenCalled();
+  });
+
+  it('should generate html with only summary and html screenshot', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'trxDirPath':
+          return '__tests__/trx';
+        case 'outputHtmlPath':
+          return 'output/results.html';
+        case 'onlySummary':
+          return 'true';
+        case 'outputHtmlEmailPath':
+          return 'output/email-results.html';
         default:
           return '';
       }

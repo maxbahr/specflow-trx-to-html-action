@@ -1,4 +1,5 @@
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
+import fetch from 'node-fetch';
 
 const htmlHeader = `<head>
     <title>##report_title##</title>
@@ -489,7 +490,7 @@ const htmlScriptsTestResults = `<script>
 
     </script>`;
 
-export function getHtmlTemplate(parameters: IHtmlGeneratorParameters): string {
+export async function getHtmlTemplate(parameters: IHtmlGeneratorParameters): Promise<string> {
   return `<!DOCTYPE html>
   <html lang="en">
   ${htmlHeader}
@@ -499,7 +500,7 @@ export function getHtmlTemplate(parameters: IHtmlGeneratorParameters): string {
       <div class="col-10 d-flex align-items-center"><h1>##report_title_h1##</h1></div>
       ${
         typeof parameters.projectLogoSrc === 'string'
-          ? `<div class="col-2 d-flex align-items-center justify-content-end"><img width="150px" alt="Project Logo" class="projectLogo" src="${parameters.projectLogoSrc}"></div>`
+          ? `<div class="col-2 d-flex align-items-center justify-content-end"><img width="150px" alt="Project Logo" class="projectLogo" src="${await getImageAsBase64(parameters.projectLogoSrc)}"></div>`
           : ''
       }
     </div>
@@ -511,8 +512,54 @@ export function getHtmlTemplate(parameters: IHtmlGeneratorParameters): string {
   ${parameters.onlySummary ? '' : htmlModal(parameters.noLogs)}
   <!--Scripts-->
   ${parameters.onlySummary ? '' : htmlScriptsTestResults}
-  ${htmlScriptsBootstrap}
+  ${parameters.onlySummary ? '' : htmlScriptsBootstrap}
   </body>
   </html>
   `;
+}
+
+async function getImageAsBase64(url: string): Promise<string> {
+  const prefix = 'data:image/png;base64,';
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+    const imageBuffer = await response.buffer();
+    const base64Data = imageBuffer.toString('base64');
+    return prefix + base64Data;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    throw error;
+  }
+}
+
+export function htmlEmailContent(imgBase64: string): string {
+  const prefix = 'data:image/png;base64,';
+  return `
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Results</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <img src="${prefix + imgBase64}" alt="Test results">
+</body>
+</html>`;
 }

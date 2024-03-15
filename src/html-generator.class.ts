@@ -8,13 +8,13 @@ import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type
 import { getHtmlTemplate } from './html-template';
 
 export class HtmlGenerator {
-  static generateHTML(
+  static async generateHTML(
     summaryResult: ISummaryResult,
     summaryDomainResult: ISummaryResult[],
     results: IUnitTestResult[],
     htmlParameters: IHtmlGeneratorParameters
-  ): string {
-    let htmlContent: string = getHtmlTemplate(htmlParameters);
+  ): Promise<string> {
+    let htmlContent: string = await getHtmlTemplate(htmlParameters);
     let iterator = 0;
     let testTableContent = '';
     let domainSummaryTableContent = '';
