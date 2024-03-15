@@ -51,7 +51,7 @@ export async function run(): Promise<void> {
     );
     HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
     if (outputHtmlEmailPath && onlySummary) {
-      const imgBase64 = await HtmlScreenshot.getScreenshotHtmlBase64(outputHtmlEmailPath, htmlContent)
+      const imgBase64 = await HtmlScreenshot.getScreenshotHtmlBase64(outputHtmlEmailPath, htmlContent);
       const htmlWithImg = htmlEmailContent(imgBase64);
       HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlWithImg, false);
     }

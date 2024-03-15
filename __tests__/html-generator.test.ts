@@ -5,7 +5,7 @@ import { IUnitTestResult } from '../src/interfaces/unit-test-result.type';
 
 describe('HtmlGenerator', () => {
   describe('generateHTML', () => {
-    test('should generate HTML content correctly', () => {
+    test('should generate HTML content correctly', async () => {
       const summaryResult: ISummaryResult = {
         domain: 'TestDomain',
         total: 10,
@@ -70,7 +70,12 @@ describe('HtmlGenerator', () => {
         projectLogoSrc: false
       };
 
-      const generatedHtml = HtmlGenerator.generateHTML(summaryResult, summaryDomainResult, results, htmlParameters);
+      const generatedHtml = await HtmlGenerator.generateHTML(
+        summaryResult,
+        summaryDomainResult,
+        results,
+        htmlParameters
+      );
 
       expect(typeof generatedHtml).toBe('string');
       expect(generatedHtml.length).toBeGreaterThan(0);
