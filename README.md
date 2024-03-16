@@ -69,11 +69,6 @@ attachments associated with the test results.
   - _Required:_ No
   - _Default:_ 'undefined'
 
-You will need to install first chrome
-    - name: Install Puppeteer
-      run: npm i puppeteer
-
-
 ## Usage
 
 ```yaml

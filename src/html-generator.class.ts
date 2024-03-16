@@ -3,40 +3,42 @@ import { Options, minify } from 'html-minifier';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { FileUtils } from './fs-utils.class';
-import { HtmlComponent } from './html-component.class';
+import { HtmlWebComponent } from './html-web-component.class';
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
-import { getHtmlTemplate } from './html-template';
+import { getWebHtmlTemplate } from './html-web-template';
+import { HtmlMailComponent } from './html-mail-component.class';
+import { htmlMailTemplate } from './html-mail-template';
 
 export class HtmlGenerator {
-  static async generateHTML(
+  static async generateWebHtml(
     summaryResult: ISummaryResult,
     summaryDomainResult: ISummaryResult[],
     results: IUnitTestResult[],
     htmlParameters: IHtmlGeneratorParameters
   ): Promise<string> {
-    let htmlContent: string = await getHtmlTemplate(htmlParameters);
+    let htmlContent: string = await getWebHtmlTemplate(htmlParameters);
     let iterator = 0;
     let testTableContent = '';
     let domainSummaryTableContent = '';
     let domainFilterOptions = '';
     let featureFilterOptions = '';
-    const summaryTableContent: string = HtmlComponent.summaryTableComponent(summaryResult, results);
+    const summaryTableContent: string = HtmlWebComponent.summaryTableComponent(summaryResult, results);
     //Domain Summary
     for (const summary of summaryDomainResult) {
-      domainSummaryTableContent += HtmlComponent.domainSummaryTableComponent(summary);
-      domainFilterOptions += HtmlComponent.optionComponent(summary.domain, summary.domain);
+      domainSummaryTableContent += HtmlWebComponent.domainSummaryTableComponent(summary);
+      domainFilterOptions += HtmlWebComponent.optionComponent(summary.domain, summary.domain);
     }
 
     const allFeatureNames: string[] = results.map(f => f.featureName);
     const uniqueFeatureNames: string[] = [...new Set(allFeatureNames)];
     uniqueFeatureNames.sort();
     for (const featureName of uniqueFeatureNames) {
-      featureFilterOptions += HtmlComponent.optionComponent(featureName, featureName);
+      featureFilterOptions += HtmlWebComponent.optionComponent(featureName, featureName);
     }
 
     //Test Results
     for (const result of results) {
-      testTableContent += HtmlComponent.testResultComponent(result, ++iterator, htmlParameters.noLogs);
+      testTableContent += HtmlWebComponent.testResultComponent(result, ++iterator, htmlParameters.noLogs);
     }
 
     //replace placeholders
@@ -49,6 +51,28 @@ export class HtmlGenerator {
     htmlContent = htmlContent.replace('##test_rows##', testTableContent);
     htmlContent = htmlContent.replace('##domainFilterOptions##', domainFilterOptions);
     htmlContent = htmlContent.replace('##featureFilterOptions##', featureFilterOptions);
+    htmlContent = htmlContent.replace('##report_title##', htmlParameters.title);
+    htmlContent = htmlContent.replace('##report_title_h1##', htmlParameters.title);
+
+    return htmlContent;
+  }
+  static async generateMailHtml(
+    summaryResult: ISummaryResult,
+    summaryDomainResult: ISummaryResult[],
+    results: IUnitTestResult[],
+    htmlParameters: IHtmlGeneratorParameters
+  ): Promise<string> {
+    let htmlContent: string = htmlMailTemplate;
+    let domainSummaryTableContent = '';
+    const summaryTableContent: string = HtmlMailComponent.summaryTableComponent(summaryResult, results);
+    //Domain Summary
+    for (const summary of summaryDomainResult) {
+      domainSummaryTableContent += HtmlMailComponent.domainSummaryTableComponent(summary);
+    }
+
+    //replace placeholders
+    htmlContent = htmlContent.replace('##summary_rows##', summaryTableContent);
+    htmlContent = htmlContent.replace('##domain_summary_rows##', domainSummaryTableContent);
     htmlContent = htmlContent.replace('##report_title##', htmlParameters.title);
     htmlContent = htmlContent.replace('##report_title_h1##', htmlParameters.title);
 

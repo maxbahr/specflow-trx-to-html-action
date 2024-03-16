@@ -4,7 +4,7 @@ import { ISummaryResult } from '../src/interfaces/summary-result.type';
 import { IUnitTestResult } from '../src/interfaces/unit-test-result.type';
 
 describe('HtmlGenerator', () => {
-  describe('generateHTML', () => {
+  describe('generateWebHtml', () => {
     test('should generate HTML content correctly', async () => {
       const summaryResult: ISummaryResult = {
         domain: 'TestDomain',
@@ -70,7 +70,7 @@ describe('HtmlGenerator', () => {
         projectLogoSrc: undefined
       };
 
-      const generatedHtml = await HtmlGenerator.generateHTML(
+      const generatedHtml = await HtmlGenerator.generateWebHtml(
         summaryResult,
         summaryDomainResult,
         results,

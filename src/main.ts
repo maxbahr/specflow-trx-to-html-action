@@ -5,8 +5,6 @@ import { ISummaryResult } from './interfaces/summary-result.type';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
 import { TestResultPreparing } from './test-result-preparing.class';
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
-import { HtmlScreenshot } from './html-screenshot.class';
-import { htmlEmailContent } from './html-template';
 
 /**
  * The main function for the action.
@@ -43,17 +41,23 @@ export async function run(): Promise<void> {
       noLogs,
       projectLogoSrc
     };
-    const htmlContent = await HtmlGenerator.generateHTML(
+    const htmlContent = await HtmlGenerator.generateWebHtml(
       summaryResult,
       summaryDomainResult,
       unitTestResults,
       htmlParameters
     );
     HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
-    if (outputHtmlEmailPath !== undefined && onlySummary) {
-      const imgBase64 = await HtmlScreenshot.getScreenshotHtmlBase64(outputHtmlEmailPath, htmlContent);
-      const htmlWithImg = htmlEmailContent(imgBase64);
-      HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlWithImg, false);
+
+    //email html
+    if (outputHtmlEmailPath !== undefined) {
+      const htmlMailContent = await HtmlGenerator.generateMailHtml(
+        summaryResult,
+        summaryDomainResult,
+        unitTestResults,
+        htmlParameters
+      );
+      HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlMailContent, false);
     }
   } catch (error) {
     // Fail the workflow run if an error occurs

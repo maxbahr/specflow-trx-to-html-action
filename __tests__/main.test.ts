@@ -156,7 +156,7 @@ describe('action', () => {
     expect(errorMock).not.toHaveBeenCalled();
   });
 
-  it('should generate html with only summary and html screenshot', async () => {
+  it('should generate html for sending email', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -164,10 +164,8 @@ describe('action', () => {
           return '__tests__/trx';
         case 'outputHtmlPath':
           return 'output/results.html';
-        case 'onlySummary':
-          return 'true';
         case 'outputHtmlEmailPath':
-          return 'output/email-results.html';
+          return 'output/email-body-results.html';
         default:
           return '';
       }
