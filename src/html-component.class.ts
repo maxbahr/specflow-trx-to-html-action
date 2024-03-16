@@ -97,17 +97,18 @@ export class HtmlComponent {
     const r = result.outcome;
     const pRun = result.previousRun;
     const pRunErrMsg = pRun ? _.escape(pRun.errMsg || '') : '';
-    if (!errMsg) return '';
 
-    if (r === 'Passed') {
-      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="passed-msg">All steps passed</div>`;
-    } else if (r === 'Failed') {
-      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="error-msg"">${this.truncateText(errMsg, 300)}</div>`;
-    } else if (r === 'Ignored') {
-      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="ignored-msg"">${this.truncateText(errMsg, 300)}</div>`;
+    if (errMsg) {
+       if (r === 'Failed') {
+         return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="error-msg"">${this.truncateText(errMsg, 300)}</div>`;
+       } else if (r === 'Ignored') {
+         return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="ignored-msg"">${this.truncateText(errMsg, 300)}</div>`;
+       }
     } else {
-      return '';
+      return `${this.returnTableErrorComponent(pRun, pRunErrMsg)}<div class="passed-msg">All steps passed</div>`;
     }
+
+    return '';
   }
 
   private static returnTestProgress(data: ISummaryResult, showLabel: boolean): string {

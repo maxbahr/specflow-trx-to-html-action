@@ -61,7 +61,18 @@ attachments associated with the test results.
 
   - _Description:_ Specifies the URL of the image to be shown in the top right corner of the report.
   - _Required:_ No
-  - _Default:_ 'false'
+  - _Default:_ 'undefined'
+
+- **outputHtmlEmailPath**:
+
+  - _Description:_ Specifies the file path for the HTML file that will be generated for sending as email html body.
+  - _Required:_ No
+  - _Default:_ 'undefined'
+
+You will need to install first chrome
+    - name: Install Puppeteer
+      run: npm i puppeteer
+
 
 ## Usage
 
@@ -87,4 +98,5 @@ jobs:
           onlySummary: 'true'
           noLogs: 'true'
           projectLogoSrc: 'http://my/img.png'
+          outputHtmlEmailPath: 'output/email-result.html'
 ```
