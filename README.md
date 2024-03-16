@@ -65,7 +65,7 @@ attachments associated with the test results.
 
 - **outputHtmlEmailPath**:
 
-  - _Description:_ Specifies the file path for the HTML file that will be generated for sending as email html body.
+  - _Description:_ Specifies the file path for the HTML file that will be generated for sending as email HTML body.
   - _Required:_ No
   - _Default:_ 'undefined'
 
