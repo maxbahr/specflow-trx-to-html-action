@@ -54,21 +54,36 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test Local Action
-        id: test-action
+        id: test-action1
         uses: ./
         with:
           trxDirPath: './__tests__/trx'
           attachmentsDirPath: './__tests__/attachments'
-          outputHtmlPath: 'output/${{ github.run_number }}-test-results.html'
+          outputHtmlPath: 'output/${{ github.run_number }}-summary-test-results.html'
           projectLogoSrc: https://fontslogo.com/wp-content/uploads/2013/03/GitHub-Logo-Font.jpg
           onlySummary: true
-          outputHtmlEmailPath: ${{ github.run_number }}-nexa-email-summary-ui-test-report.html
+          outputHtmlEmailPath: ${{ github.run_number }}-email-summary-ui-test-report.html
 
-      - name: Save HTML report
+      - name: Test Local Action
+        id: test-action2
+        uses: ./
+        with:
+          trxDirPath: './__tests__/trx'
+          attachmentsDirPath: './__tests__/attachments'
+          outputHtmlPath: 'output/${{ github.run_number }}-full-test-results.html'
+          projectLogoSrc: https://fontslogo.com/wp-content/uploads/2013/03/GitHub-Logo-Font.jpg          
+
+      - name: Save HTML summary report
         uses: actions/upload-artifact@v3
         with:
-          name: HTML_Report_${{ matrix.browser }}
-          path: output/${{ github.run_number }}-test-results.html   
+          name: HTML_Report
+          path: output/${{ github.run_number }}-summary-test-results.html'
+          
+      - name: Save HTML full report
+        uses: actions/upload-artifact@v3
+        with:
+          name: HTML_Report
+          path: output/${{ github.run_number }}-full-test-results.html
 
       - name: Send email
         uses: dawidd6/action-send-mail@v3.11.0
@@ -84,8 +99,8 @@ jobs:
           from: Api Marlin <automat.marlin.api@gmail.com>
           in_reply_to: automat.marlin.api@gmail.com         
           ignore_cert: false
-          html_body: file://${{ github.run_number }}-nexa-email-summary-ui-test-report.html
-          attachments: output/${{ github.run_number }}-test-results.html
+          html_body: file://${{ github.run_number }}-email-summary-ui-test-report.html
+          attachments: output/${{ github.run_number }}-summary-test-results.html
         continue-on-error: true
 
 
