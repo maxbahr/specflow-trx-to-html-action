@@ -38,7 +38,6 @@ export const iconPassed = '✅';
 export const iconFailed = '❌';
 export const iconIgnored = '⚪';
 export const iconRerun = '🔄';
-
 export async function getImageAsBase64(url: string): Promise<string> {
   const imageType = guessImageTypeFromExtension(url);
   const prefix = `data:${imageType};base64,`;

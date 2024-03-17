@@ -52,7 +52,7 @@ export const htmlMailTemplate = `
                 <table style="width: 100%; vertical-align: middle; margin-bottom: 16px; border-collapse: collapse;">
                     <tbody>
                         <tr>
-                            <td style="padding: 5px 10px 20px 10px; background-color: #fbfbfb;">
+                            <td style="padding: 5px 10px 20px 10px; border: 1px solid #ecf0f3; background-color: #fbfbfb;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <thead>
                                         <tr style="border-bottom: 1px solid #d9cdcd;">

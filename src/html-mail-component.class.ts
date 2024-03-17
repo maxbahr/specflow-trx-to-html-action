@@ -1,16 +1,7 @@
 import moment from 'moment';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
-import {
-  calculatePercentage,
-  formatTime,
-  getImageAsBase64,
-  iconFailed,
-  iconIgnored,
-  iconPassed,
-  iconRerun,
-  iconTotal
-} from './utils';
+import { calculatePercentage, formatTime, iconFailed, iconIgnored, iconPassed, iconRerun, iconTotal } from './utils';
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
 
 export class HtmlMailComponent {
@@ -52,7 +43,7 @@ export class HtmlMailComponent {
   static async projectLogo(parameters: IHtmlGeneratorParameters): Promise<string> {
     return `${
       parameters.projectLogoSrc && parameters.projectLogoSrc.startsWith('http')
-        ? `<img width="90px" alt="Project Logo" class="projectLogo" src="${await getImageAsBase64(parameters.projectLogoSrc)}">`
+        ? `<img width="90px" alt="Project Logo" class="projectLogo" src="${parameters.projectLogoSrc}">`
         : ''
     }`;
   }
