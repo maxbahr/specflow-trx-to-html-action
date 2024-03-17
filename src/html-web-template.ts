@@ -514,7 +514,7 @@ export async function getWebHtmlTemplate(parameters: IHtmlGeneratorParameters): 
   ${parameters.onlySummary ? '' : htmlModal(parameters.noLogs)}
   <!--Scripts-->
   ${parameters.onlySummary ? '' : htmlScriptsTestResults}
-  ${parameters.onlySummary ? '' : htmlScriptsBootstrap}
+  ${htmlScriptsBootstrap}
   </body>
   </html>
   `;
