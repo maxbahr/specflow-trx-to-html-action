@@ -59,11 +59,34 @@ jobs:
         with:
           trxDirPath: './__tests__/trx'
           attachmentsDirPath: './__tests__/attachments'
-          outputHtmlPath: 'output/results.html'
+          outputHtmlPath: 'output/${{ github.run_number }}-test-results.html'
+          projectLogoSrc: https://fontslogo.com/wp-content/uploads/2013/03/GitHub-Logo-Font.jpg
+          onlySummary: true
+          outputHtmlEmailPath: ${{ github.run_number }}-nexa-email-summary-ui-test-report.html
 
-      - name: Publish Test Results
+      - name: Save HTML report
         uses: actions/upload-artifact@v3
         with:
-          name: 'Test Report'
-          path: ./output/results.html
+          name: HTML_Report_${{ matrix.browser }}
+          path: output/${{ github.run_number }}-test-results.html   
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3.11.0
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: automat.marlin.api@gmail.com
+          password: ${{secrets.Password}}
+          subject: ${{ github.run_number }} - Run Automation Tests
+          to: mba@spyro-soft.com
+          cc: automat.sbs@gmail.com
+          from: Api Marlin <automat.marlin.api@gmail.com>
+          in_reply_to: automat.marlin.api@gmail.com         
+          ignore_cert: false
+          html_body: file://${{ github.run_number }}-nexa-email-summary-ui-test-report.html
+          attachments: output/${{ github.run_number }}-test-results.html
         continue-on-error: true
+
+
+        
