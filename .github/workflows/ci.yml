@@ -60,7 +60,6 @@ jobs:
           trxDirPath: './__tests__/trx'
           attachmentsDirPath: './__tests__/attachments'
           outputHtmlPath: 'output/${{ github.run_number }}-summary-test-results.html'
-          projectLogoSrc: https://fontslogo.com/wp-content/uploads/2013/03/GitHub-Logo-Font.jpg
           onlySummary: true
           outputHtmlEmailPath: ${{ github.run_number }}-email-summary-ui-test-report.html
 
@@ -100,5 +99,7 @@ jobs:
           in_reply_to: automat.marlin.api@gmail.com
           ignore_cert: false
           html_body: file://${{ github.run_number }}-email-summary-ui-test-report.html
-          attachments: output/${{ github.run_number }}-summary-test-results.html
+          attachments:
+            output/${{ github.run_number }}-summary-test-results.html,output/${{ github.run_number
+            }}-full-test-results.html
         continue-on-error: true
