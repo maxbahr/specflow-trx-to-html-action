@@ -1,5 +1,5 @@
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
-import fetch from 'node-fetch';
+import { getImageAsBase64 } from './utils';
 
 const htmlHeader = `<head>
     <title>##report_title##</title>
@@ -518,20 +518,4 @@ export async function getWebHtmlTemplate(parameters: IHtmlGeneratorParameters): 
   </body>
   </html>
   `;
-}
-
-async function getImageAsBase64(url: string): Promise<string> {
-  const prefix = 'data:image/png;base64,';
-  try {
-    const response = await fetch(new URL(url));
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`);
-    }
-    const imageBuffer = await response.buffer();
-    const base64Data = imageBuffer.toString('base64');
-    return prefix + base64Data;
-  } catch (error) {
-    console.error(`Error fetching image from url: '${url}':`, error);
-    throw error;
-  }
 }

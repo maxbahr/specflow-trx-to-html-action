@@ -50,7 +50,8 @@ export async function run(): Promise<void> {
     HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
 
     //email html
-    if (outputHtmlEmailPath !== undefined) {
+    const isOutputHtmlEmailPathSet = outputHtmlEmailPath !== undefined && outputHtmlEmailPath !== null;
+    if (isOutputHtmlEmailPathSet) {
       const htmlMailContent = await HtmlGenerator.generateMailHtml(
         summaryResult,
         summaryDomainResult,

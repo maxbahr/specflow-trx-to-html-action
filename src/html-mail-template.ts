@@ -1,4 +1,5 @@
-export const htmlMailTemplate = `<!DOCTYPE html>
+export const htmlMailTemplate = `
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,34 +9,69 @@ export const htmlMailTemplate = `<!DOCTYPE html>
     <meta name="author" content="Maksymilian Bahr">
 </head>
 
-<body style="margin: 1rem; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
-    <div style="margin: 0 auto; max-width: 960px;">
-        <div style="display: flex; align-items: center;">
-            <h1 style="margin-top: 0;">##report_title_h1##</h1>
-        </div>
-        <div style="margin-top: 1rem;">
-            <h2 style="margin-top: 1rem;">Execution Summary</h2>
-            ##summary_rows##
-        </div>
-        <div>
-            <h2>Domain Test Summary</h2>
-            <div style="border: 1px solid #ecf0f3; background-color: #fbfbfb; border-radius: 15px; margin-bottom: 20px; padding-left: 0.75rem; padding-right: 0.75rem;">
-                <table style="width: 100%; vertical-align: middle; margin-bottom: 1rem; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid #d9cdcd;">
-                            <th style="padding: 0.5rem 0.5rem; font-size: 1.1rem; text-align: left;">Domain</th>
-                            <th style="padding: 0.5rem 0.5rem; font-size: 1.1rem; text-align: left;"></th>
-                            <th style="padding: 0.5rem 0.5rem; font-size: 1.1rem; text-align: left;">Duration</th>
+<body style="margin: 5px; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
+    <table style="max-width: 800px;">
+        <tr>
+            <td style="text-align: left;">
+                <h1>##report_title_h1##</h1>
+            </td>
+            <td style="text-align: right;">
+                ##project_logo##
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                    <h2 style="margin-top: 16px; text-align: left;">Execution Summary</h2>
+                        <table style="padding: 10px; border: 1px solid #ecf0f3; background-color: #fbfbfb; margin-bottom: 20px; width: 100%;">
+                            <tr>
+                                <td style="border: 1px solid #ecf0f3; background-color: white; padding: 10px 5px; margin-left: 20px; margin-right: 20px; margin-top: 20px;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                    ##summary_numbers##
+                                    </table>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; padding-bottom: 16px;">
+                                ##summary_percentage##
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        ##summary_duration##
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: left;">
+                <h2>Domain Test Summary</h2>
+                <table style="width: 100%; vertical-align: middle; margin-bottom: 16px; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 5px 10px 20px 10px; background-color: #fbfbfb;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #d9cdcd;">
+                                            <th style="padding: 3px 3px; font-size: 14px; text-align: left;">Domain</th>
+                                            <th style="padding: 3px 3px; font-size: 14px; text-align: left;"></th>
+                                            <th style="padding: 3px 3px; font-size: 14px; text-align: left;">Duration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 12px">    
+                                        ##domain_summary_rows##
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>    
-                    ##domain_summary_rows##
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
+            </td>            
+        </tr>
+    </table>    
 </body>
 </html>
-
 `;

@@ -64,17 +64,19 @@ export class HtmlGenerator {
   ): Promise<string> {
     let htmlContent: string = htmlMailTemplate;
     let domainSummaryTableContent = '';
-    const summaryTableContent: string = HtmlMailComponent.summaryTableComponent(summaryResult, results);
     //Domain Summary
     for (const summary of summaryDomainResult) {
       domainSummaryTableContent += HtmlMailComponent.domainSummaryTableComponent(summary);
     }
 
     //replace placeholders
-    htmlContent = htmlContent.replace('##summary_rows##', summaryTableContent);
-    htmlContent = htmlContent.replace('##domain_summary_rows##', domainSummaryTableContent);
     htmlContent = htmlContent.replace('##report_title##', htmlParameters.title);
     htmlContent = htmlContent.replace('##report_title_h1##', htmlParameters.title);
+    htmlContent = htmlContent.replace('##project_logo##', await HtmlMailComponent.projectLogo(htmlParameters));
+    htmlContent = htmlContent.replace('##summary_numbers##', HtmlMailComponent.summaryNumbers(summaryResult, results));
+    htmlContent = htmlContent.replace('##summary_percentage##', HtmlMailComponent.summaryPercentage(summaryResult));
+    htmlContent = htmlContent.replace('##summary_duration##', HtmlMailComponent.summaryDuration(summaryResult));
+    htmlContent = htmlContent.replace('##domain_summary_rows##', domainSummaryTableContent);
 
     return htmlContent;
   }

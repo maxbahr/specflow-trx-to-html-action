@@ -144,6 +144,8 @@ describe('action', () => {
           return 'output/results.html';
         case 'projectLogoSrc':
           return 'https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png';
+        case 'outputHtmlEmailPath':
+          return 'output/email-body-results.html';
         default:
           return '';
       }

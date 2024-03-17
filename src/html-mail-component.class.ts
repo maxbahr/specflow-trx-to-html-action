@@ -1,37 +1,60 @@
 import moment from 'moment';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
-import { calculatePercentage, formatTime, iconFailed, iconIgnored, iconPassed, iconRerun, iconTotal } from './utils';
+import {
+  calculatePercentage,
+  formatTime,
+  getImageAsBase64,
+  iconFailed,
+  iconIgnored,
+  iconPassed,
+  iconRerun,
+  iconTotal
+} from './utils';
+import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
 
 export class HtmlMailComponent {
-  static summaryTableComponent(summaryResult: ISummaryResult, results: IUnitTestResult[]): string {
-    return `
-        <div style="border: 1px solid #ecf0f3; background-color: #fbfbfb; border-radius: 15px; margin-bottom: 20px;">
-                        <div style="border: 1px solid #ecf0f3; background-color: white; padding: 20px 10px; border-radius: 15px; margin-left: 2rem; margin-right: 2rem; margin-top: 2rem;">
-                            <div style="display: flex; flex-wrap: wrap; justify-content: space-around; max-width: 100%;">
-                                <div style="font-size: 1.5rem; max-width: fit-content; padding: 0.5rem 0.5rem;">${iconTotal}&nbsp;<span>${summaryResult.total}</span></div>
-                                <div style="font-size: 1.5rem; max-width: fit-content; padding: 0.5rem 0.5rem;">${iconPassed}&nbsp;<span>${summaryResult.passed}</span></div>
-                                <div style="font-size: 1.5rem; max-width: fit-content; padding: 0.5rem 0.5rem;">${iconFailed}&nbsp;<span>${summaryResult.failed}</span></div>
-                                <div style="font-size: 1.5rem; max-width: fit-content; padding: 0.5rem 0.5rem;">${iconIgnored}&nbsp;<span>${summaryResult.ignored}</span></div>
-                                <div style="font-size: 1.5rem; max-width: fit-content; padding: 0.5rem 0.5rem;">${iconRerun}&nbsp;<span>${results.filter(t => t.rerun === true).length}</span></div>
-                            </div>
-                        </div>
-                        <div style="text-align: center;"><span style="font-size: 5rem; color: #00d26e;">${calculatePercentage(summaryResult.passed, summaryResult.passed + summaryResult.failed)}% passed</span></div>
-                        <div style="margin-top: 1rem; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: space-around;">
-                            <div style="font-size: 1.22rem;"><span style="font-size: 1rem;">start time: </span><span>${moment(summaryResult.startDate).format('YYYY-MM-DD hh:mm:ss')}</span></div>
-                            <div style="font-size: 1.22rem;"><span style="font-size: 1rem;">end time: </span><span>${moment(summaryResult.endDate).format('YYYY-MM-DD hh:mm:ss')}</span></div>
-                            <div style="font-size: 1.22rem;"><span style="font-size: 1rem;">duration: </span><span>${formatTime(summaryResult.duration)}</span></div>
-                        </div>
-                    </div>`;
+  static summaryPercentage(summaryResult: ISummaryResult): string {
+    return `<h1 style="font-size: 50px; color: #00d26e; margin: 0px;">${calculatePercentage(summaryResult.passed, summaryResult.passed + summaryResult.failed)}% passed</h1>`;
+  }
+
+  static summaryNumbers(summaryResult: ISummaryResult, results: IUnitTestResult[]): string {
+    return `<tr>
+        <td style="font-size: 18px; padding: 8px 8px;">${iconTotal}&nbsp;<span>${summaryResult.total}</span></td>
+        <td style="font-size: 18px; padding: 8px 8px;">${iconPassed}&nbsp;<span>${summaryResult.passed}</span></td>
+        <td style="font-size: 18px; padding: 8px 8px;">${iconFailed}&nbsp;<span>${summaryResult.failed}</span></td>
+        <td style="font-size: 18px; padding: 8px 8px;">${iconIgnored}&nbsp;<span>${summaryResult.ignored}</span></td>
+        <td style="font-size: 18px; padding: 8px 8px;">${iconRerun}&nbsp;<span>${results.filter(t => t.rerun === true).length}</span></td>
+    </tr>`;
+  }
+
+  static summaryDuration(summaryResult: ISummaryResult): string {
+    return `<tr>
+        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">start time: </span><span>${moment(summaryResult.startDate).format('YYYY-MM-DD hh:mm:ss')}</span></td>
+        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">end time: </span><span>${moment(summaryResult.endDate).format('YYYY-MM-DD hh:mm:ss')}</span></td>
+        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">duration: </span><span>${formatTime(summaryResult.duration)}</span></td>
+    </tr>`;
   }
 
   static domainSummaryTableComponent(summary: ISummaryResult): string {
     return `
-        <tr style="border-bottom: 1px solid #d9cdcd;">
-            <td style="padding: 0.5rem 0.5rem; height: 2rem; text-align: left;"><b>${summary.domain}</b></td>
-            <td style="width: 75%; padding: 0.5rem 0.5rem; height: 2rem; text-align: left;">${this.returnTestProgress(summary)}</td>
-            <td style="padding: 0.5rem 0.5rem; height: 2rem; text-align: left;">${formatTime(summary.duration)}</td>
-        </tr>`;
+    <tr style="border-bottom: 1px solid #d9cdcd;">
+        <td style="padding: 3px 3px; height: 28px; text-align: left;"><b>${summary.domain}</b></td>
+        <td style="width: 75%; padding: 3px 3px; height: 28px; text-align: left;">
+            <table style="width: 100%; height: 17px; background-color: #e9ecef; table-layout: fixed; border-collapse: collapse;">
+            ${this.returnTestProgress(summary)}
+            </table>                                
+        </td>
+        <td style="padding: 3px 3px; height: 28px; text-align: left;">${formatTime(summary.duration)}</td>
+    </tr>`;
+  }
+
+  static async projectLogo(parameters: IHtmlGeneratorParameters): Promise<string> {
+    return `${
+      parameters.projectLogoSrc && parameters.projectLogoSrc.startsWith('http')
+        ? `<img width="90px" alt="Project Logo" class="projectLogo" src="${await getImageAsBase64(parameters.projectLogoSrc)}">`
+        : ''
+    }`;
   }
 
   private static returnTestProgress(data: ISummaryResult): string {
@@ -40,10 +63,10 @@ export class HtmlMailComponent {
     const ignored = calculatePercentage(data.ignored, data.total);
 
     return `
-        <div style="height: 1.2rem; display: flex; overflow: hidden; background-color: #e9ecef; border-radius: .25rem;">
-            <div style="width: ${passed}%; background-color: #00d26e; float: left; color: #fff; text-align: center; white-space: nowrap; font-size: 0.75rem;"><span>${data.passed}</span></div>
-            <div style="width: ${failed}%; background-color: #f63d63; float: left; color: #fff; text-align: center; white-space: nowrap; font-size: 0.75rem;"><span>${data.failed}</span></div>
-            <div style="width: ${ignored}%; background-color: #cbcccb; float: left; color: #fff; text-align: center; white-space: nowrap; font-size: 0.75rem;"><span>${data.ignored}</span></div>
-        </div>`;
+    <tr>
+        ${passed > 0 ? `<td style="width: ${passed}%; background-color: #00d26e; color: #fff; text-align: center; white-space: nowrap; font-size: 14px;"><span>${data.passed}</span></td>` : ''}
+        ${failed > 0 ? `<td style="width: ${failed}%; background-color: #f63d63; color: #fff; text-align: center; white-space: nowrap; font-size: 14px;"><span>${data.failed}</span></td>` : ''}
+        ${ignored > 0 ? `<td style="width: ${ignored}%; background-color: #cbcccb; color: #fff; text-align: center; white-space: nowrap; font-size: 14px;"><span>${data.ignored}</span></td>` : ''}
+    </tr>`;
   }
 }
