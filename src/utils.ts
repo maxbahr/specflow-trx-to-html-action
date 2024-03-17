@@ -40,7 +40,9 @@ export const iconIgnored = '⚪';
 export const iconRerun = '🔄';
 
 export async function getImageAsBase64(url: string): Promise<string> {
-  const prefix = 'data:image/png;base64,';
+  const imageType = guessImageTypeFromExtension(url);
+  const prefix = `data:${imageType};base64,`;
+
   try {
     const response = await fetch(new URL(url));
     if (!response.ok) {
@@ -52,5 +54,21 @@ export async function getImageAsBase64(url: string): Promise<string> {
   } catch (error) {
     console.error(`Error fetching image from url: '${url}':`, error);
     throw error;
+  }
+}
+
+function guessImageTypeFromExtension(url: string): string | undefined {
+  const extension = url.split('.').pop()?.toLowerCase();
+  const extensionToMIME: { [key: string]: string } = {
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    svg: 'image/svg+xml'
+  };
+  if (extension && Object.prototype.hasOwnProperty.call(extensionToMIME, extension)) {
+    return extensionToMIME[extension];
+  } else {
+    return undefined;
   }
 }
