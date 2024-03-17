@@ -77,7 +77,7 @@ jobs:
           server_port: 465
           secure: true
           username: automat.marlin.api@gmail.com
-          password: ${{secrets.Password}}
+          password: ${{secrets.PASSWORD}}
           subject: ${{ github.run_number }} - Run Automation Tests
           to: mba@spyro-soft.com
           cc: automat.sbs@gmail.com
