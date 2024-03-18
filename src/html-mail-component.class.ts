@@ -43,7 +43,7 @@ export class HtmlMailComponent {
   static async projectLogo(parameters: IHtmlGeneratorParameters): Promise<string> {
     return `${
       parameters.projectLogoSrc && parameters.projectLogoSrc.startsWith('http')
-        ? `<img width="90px" alt="Project Logo" class="projectLogo" src="${parameters.projectLogoSrc}">`
+        ? `<img width="90" style="width:90px; border:0;" alt="Project Logo" class="projectLogo" src="${parameters.projectLogoSrc}">`
         : ''
     }`;
   }
