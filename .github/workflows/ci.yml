@@ -75,13 +75,13 @@ jobs:
       - name: Save HTML summary report
         uses: actions/upload-artifact@v4
         with:
-          name: HTML_Summary_Report 
+          name: HTML_Summary_Report
           path: output/${{ github.run_number }}-summary-test-results.html'
 
       - name: Save HTML full report
         uses: actions/upload-artifact@v4
         with:
-          name: HTML_Full_Report 
+          name: HTML_Full_Report
           path: output/${{ github.run_number }}-full-test-results.html
 
       - name: Save HTML email body report

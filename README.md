@@ -228,3 +228,8 @@ Features
     attachments: ${{ github.run_number }}-ui-test-report.zip
   continue-on-error: true
 ```
+
+## Rerun test
+
+If there are two .trx files with the same test scenario and domain name, then this scenario would be marked as 🔄 rerun.
+The error message from the first test is displayed in the row of the test results grid.
