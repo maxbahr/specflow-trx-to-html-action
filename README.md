@@ -122,31 +122,31 @@ where you can find more information about specflow logger
 
 ### All logs in the report based on the using \_specFlowOutputHelper.WriteLine() in the code
 
-```
+```csharp
 _specFlowOutputHelper.WriteLine("Screen Resolution: 1920 x 1080");
 ```
 
 Logs
 
-```
+```plaintext 
 -> Screen Resolution: 1920 x 1080
 ```
 
-### All attachment log information contains file paths, which are later used to match all screenshots/files with the corresponding information from the logs
+### Attachment log information contains file paths that are later used to match all screenshots/files 
 
-```
+```csharp
 _specFlowOutputHelper.AddAttachment("/home/user/test_4321/screenshot.png");
 ```
 
 Logs
 
-```
+```plaintext 
 -> Attachment '/home/user/test_4321/screenshot.png' added
 ```
 
 ### Recommanded Feature file structure of the specflow project
 
-```
+```plaintext 
 Features
   |_ {Domain_1}
         |_ {Feature File 1_1}
