@@ -128,11 +128,11 @@ _specFlowOutputHelper.WriteLine("Screen Resolution: 1920 x 1080");
 
 Logs
 
-```plaintext 
+```plaintext
 -> Screen Resolution: 1920 x 1080
 ```
 
-### Attachment log information contains file paths that are later used to match all screenshots/files 
+### Attachment log information contains file paths that are later used to match all screenshots/files
 
 ```csharp
 _specFlowOutputHelper.AddAttachment("/home/user/test_4321/screenshot.png");
@@ -140,13 +140,13 @@ _specFlowOutputHelper.AddAttachment("/home/user/test_4321/screenshot.png");
 
 Logs
 
-```plaintext 
+```plaintext
 -> Attachment '/home/user/test_4321/screenshot.png' added
 ```
 
 ### Recommanded Feature file structure of the specflow project
 
-```plaintext 
+```plaintext
 Features
   |_ {Domain_1}
         |_ {Feature File 1_1}
