@@ -116,9 +116,8 @@ jobs:
 
 ## Specflow setup
 
-See
-[specflow doc](https://docs.specflow.org/projects/specflow/en/latest/outputapi/outputapi.html 'Get more information about specflow logger')
-where you can find more information about specflow logger
+See [specflow doc](https://docs.specflow.org/projects/specflow/en/latest/outputapi/outputapi.html) where you can find
+more information about specflow logger
 
 ### All logs in the report based on the using \_specFlowOutputHelper.WriteLine() in the code
 
