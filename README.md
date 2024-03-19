@@ -120,7 +120,7 @@ See
 [specflow doc](https://docs.specflow.org/projects/specflow/en/latest/outputapi/outputapi.html 'Get more information about specflow logger')
 where you can find more information about specflow logger
 
-#### All logs in the report based on the using \_specFlowOutputHelper.WriteLine() in the code
+### All logs in the report based on the using \_specFlowOutputHelper.WriteLine() in the code
 
 ```
 _specFlowOutputHelper.WriteLine("Screen Resolution: 1920 x 1080");
@@ -132,7 +132,7 @@ Logs
 -> Screen Resolution: 1920 x 1080
 ```
 
-#### All attachment log information contains file paths, which are later used to match all screenshots/files with the corresponding information from the logs.
+### All attachment log information contains file paths, which are later used to match all screenshots/files with the corresponding information from the logs
 
 ```
 _specFlowOutputHelper.AddAttachment("/home/user/test_4321/screenshot.png");
@@ -144,7 +144,7 @@ Logs
 -> Attachment '/home/user/test_4321/screenshot.png' added
 ```
 
-#### Recommanded Feature file structure of the specflow project
+### Recommanded Feature file structure of the specflow project
 
 ```
 Features
@@ -158,9 +158,9 @@ Features
         |_ {Feature File 2_3}
 ```
 
-#### Tested with Specflow + XUnit
+### Tested with Specflow + XUnit
 
-## Github Action Reporting steps - example of use
+## GitHub Action Reporting steps - example of use
 
 ```yaml
 #This step will generate full report with all screenshots and logs
