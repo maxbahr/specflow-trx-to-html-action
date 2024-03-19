@@ -1,14 +1,12 @@
 # Specflow Trx to HTML Report
-
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+**Author:** Maksymilian Bahr <maks.bahr@gmail.com>
 
 Parse specflow dotnet trx files and generate HTML report with gherkin steps and attachments.
 
-**Author:** Maksymilian Bahr <maks.bahr@gmail.com>
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/89291943-c2ab-46d2-887c-52e4d691782d)
+
+
+
 
 ## Description
 
@@ -95,3 +93,126 @@ jobs:
           projectLogoSrc: 'http://my/img.png'
           outputHtmlEmailPath: 'output/email-result.html'
 ```
+
+## Report
+
+### Report with Execution, Domain and Tests Result Summary
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/f7d0b36a-e976-4933-831b-9a68a005f3a7)
+
+### Test with Given / When / Then steps
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/f3c4674d-d66a-49b4-85fd-0e7b774bb897)
+
+### Test with Given / When / Then steps with all logs underneath
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/387dde06-d8d1-4861-ad66-b954e920dc14)
+
+### Test error with screenshot (attachmentsDirPath)
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/af779f7a-78ec-4f9f-bf77-15b3dae1e5d2)
+
+### Email Test Results (outputHtmlEmailPath)
+![image](https://github.com/maxbahr/specflow-trx-to-html-action/assets/14878793/bf91bd56-4eac-4ff4-904b-d30e4e5d100c)
+
+## Specflow setup
+See [specflow doc](https://docs.specflow.org/projects/specflow/en/latest/outputapi/outputapi.html "Get more information about specflow logger") where you can find more information about specflow logger
+
+#### All logs in the report based on the using _specFlowOutputHelper.WriteLine() in the code
+```
+_specFlowOutputHelper.WriteLine("Screen Resolution: 1920 x 1080");
+```
+Logs
+```
+-> Screen Resolution: 1920 x 1080
+```
+
+
+#### All attachment log information contains file paths, which are later used to match all screenshots/files with the corresponding information from the logs.
+```
+_specFlowOutputHelper.AddAttachment("/home/user/test_4321/screenshot.png");
+```
+Logs
+```
+-> Attachment '/home/user/test_4321/screenshot.png' added
+```
+
+#### Recommanded Feature file structure of the specflow project
+```
+Features
+  |_ {Domain_1}
+        |_ {Feature File 1_1}
+        |_ {Feature File 1_2}
+        |_ {Feature File 1_3}
+  |_ {Domain_2}
+        |_ {Feature File 2_1}
+        |_ {Feature File 2_2}
+        |_ {Feature File 2_3}
+```
+
+#### Tested with Specflow + XUnit
+
+## Github Action Reporting steps - example of use
+```yaml
+#This step will generate full report with all screenshots and logs
+- name: Specflow Trx to Html Full Report
+  uses: maxbahr/specflow-trx-to-html-action@v1.x.x
+  with:
+    trxDirPath: ./TestResultsFiles
+    attachmentsDirPath: ./TestDataFiles
+    outputHtmlPath: ${{ github.run_number }}-full-ui-test-report.html
+    reportTitle: ${{ github.run_number }} - UI Automation Tests on QA
+    projectLogoSrc: https://app/logo.png
+
+#Save the report as aritafct. Report might be to big to send via email with all its screenshots and logs
+- name: Save HTML full report
+  uses: actions/upload-artifact@v3
+  with:
+    name: HTML_Report
+    path: ${{ github.run_number }}-full-ui-test-report.html
+
+#This step will generate summary report and email template ready to send
+- name: Specflow Trx to Html Summary Report
+  uses: maxbahr/specflow-trx-to-html-action@v1.x.x
+  with:
+    trxDirPath: ./TestResultsFiles
+    attachmentsDirPath: ./TestDataFiles
+    outputHtmlPath: ${{ github.run_number }}-summary-ui-test-report.html
+    reportTitle: ${{ github.run_number }} - UI Automation Tests on ${{ inputs.environment || 'QA' }}
+    projectLogoSrc: https://app/logo.png
+    onlySummary: true
+    outputHtmlEmailPath: ${{ github.run_number }}-email-summary-ui-test-report.html
+
+#This step will generate report without logs to limit the file size of the email attachment
+- name: Specflow Trx to Html No logs Report
+  uses: maxbahr/specflow-trx-to-html-action@v1.x.x
+  with:
+    trxDirPath: ./TestResultsFiles
+    attachmentsDirPath: ./TestDataFiles
+    outputHtmlPath: ${{ github.run_number }}-ui-test-report.html
+    reportTitle: ${{ github.run_number }} - UI Automation Tests on ${{ inputs.environment || 'QA' }}
+    projectLogoSrc: https://app/logo.png
+    noLogs: true   
+
+#This step will zip the report to omit anty-spam system while sending email. Sending html file may cause spam issues.
+- name: Zip Release      
+  uses: TheDoctor0/zip-release@0.7.6
+  with:        
+    filename: ${{ github.run_number }}-ui-test-report.zip
+    path: ${{ github.run_number }}-ui-test-report.html              
+
+#Sending email as the last step
+- name: Send email
+  uses: dawidd6/action-send-mail@v3.11.0
+  with:
+    server_address: smtp.gmail.com
+    server_port: 465
+    secure: true
+    username: my.email@gmail.com
+    password: ${{secrets.PASSWORD}}
+    subject: ${{ github.run_number }} - UI Automation Tests on QA
+    to: your.email@gmail.com
+    cc: your.email@yahoo.com
+    from: Test Reporter <my.email@gmail.com>      
+    ignore_cert: true
+    html_body: file://${{ github.run_number }}-email-summary-ui-test-report.html
+    attachments: ${{ github.run_number }}-ui-test-report.zip
+  continue-on-error: true
+```
+
