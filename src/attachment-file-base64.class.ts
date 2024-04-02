@@ -21,11 +21,15 @@ export class AttachmentFilesBase64 {
 
         for (const gherkinFilePath of gherkinAttachments) {
           if (gherkinFilePath) {
+            console.log(`>>> GherkinPath: ${gherkinFilePath}`);
             const filePath = filePaths.find(f => this.pathsMatch(f, gherkinFilePath));
             if (filePath) {
+              console.log(`FilePath: ${filePath}`);
               let fileBase64;
               try {
-                fileBase64 = await this.convertFileToBase64Async(path.normalize(filePath));
+                const norFilePath = path.normalize(filePath);
+                console.log(`NormFilePath: ${norFilePath}`);
+                fileBase64 = await this.convertFileToBase64Async(norFilePath);
               } catch (error) {
                 console.error(
                   `Attachment not found! File system error for test '${test.testName}' due to file path '${gherkinFilePath}' not found\n`,
