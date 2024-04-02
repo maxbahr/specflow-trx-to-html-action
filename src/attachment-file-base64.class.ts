@@ -61,8 +61,8 @@ export class AttachmentFilesBase64 {
   }
 
   private static pathsMatch(path1: string, path2: string): boolean {
-    const normalizedPath1 = path.normalize(path1).split(path.sep);
-    const normalizedPath2 = path.normalize(path2).split(path.sep);
+    const normalizedPath1 = path.normalize(path1).replaceAll(/\\/g, '/').split('/');
+    const normalizedPath2 = path.normalize(path2).replaceAll(/\\/g, '/').split('/');
     const matchFileName = normalizedPath1[normalizedPath1.length - 1] === normalizedPath2[normalizedPath2.length - 1]; // fileName
     const matchSubfolder = normalizedPath1[normalizedPath1.length - 2] === normalizedPath2[normalizedPath2.length - 2]; // subfolder
     return matchFileName && matchSubfolder;
