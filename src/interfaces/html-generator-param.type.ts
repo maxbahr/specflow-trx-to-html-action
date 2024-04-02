@@ -4,4 +4,5 @@ export interface IHtmlGeneratorParameters {
   onlySummary: boolean;
   noLogs: boolean;
   projectLogoSrc: string | undefined;
+  branchName: string | undefined;
 }

@@ -19,6 +19,7 @@ export const htmlMailTemplate = `
                 ##project_logo##
             </td>
         </tr>
+        ##branch_name##
         <tr>
             <td colspan="2" style="text-align: center;">
                     <h2 style="margin-top: 16px; text-align: left;">Execution Summary</h2>

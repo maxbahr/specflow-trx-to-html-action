@@ -54,6 +54,11 @@ inputs:
     required: false
     default: 'undefined'
 
+  branchName:
+    description: Specifies the branch name to display
+    required: false
+    default: 'undefined'
+
 runs:
   using: node20
   main: dist/index.js

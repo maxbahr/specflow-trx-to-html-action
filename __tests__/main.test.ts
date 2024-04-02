@@ -180,6 +180,30 @@ describe('action', () => {
     expect(errorMock).not.toHaveBeenCalled();
   });
 
+  it('should generate with branch name', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'trxDirPath':
+          return '__tests__/trx';
+        case 'outputHtmlPath':
+          return 'output/results.html';
+        case 'outputHtmlEmailPath':
+          return 'output/email-body-results.html';
+        case 'branchName':
+          return 'mba/this-is-my-branch-name';
+        default:
+          return '';
+      }
+    });
+
+    await main.run();
+    expect(runMock).toHaveReturned();
+
+    // Verify that all of the core library functions were called correctly
+    expect(errorMock).not.toHaveBeenCalled();
+  });
+
   it.skip('sets a failed status', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {

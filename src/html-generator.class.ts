@@ -73,6 +73,7 @@ export class HtmlGenerator {
     htmlContent = htmlContent.replace('##report_title##', htmlParameters.title);
     htmlContent = htmlContent.replace('##report_title_h1##', htmlParameters.title);
     htmlContent = htmlContent.replace('##project_logo##', await HtmlMailComponent.projectLogo(htmlParameters));
+    htmlContent = htmlContent.replace('##branch_name##', await HtmlMailComponent.branchName(htmlParameters));
     htmlContent = htmlContent.replace('##summary_numbers##', HtmlMailComponent.summaryNumbers(summaryResult, results));
     htmlContent = htmlContent.replace('##summary_percentage##', HtmlMailComponent.summaryPercentage(summaryResult));
     htmlContent = htmlContent.replace('##summary_duration##', HtmlMailComponent.summaryDuration(summaryResult));
@@ -85,7 +86,6 @@ export class HtmlGenerator {
     FileUtils.createDirectories(outputHTMLPath);
     htmlContent = shouldMinify ? this.minifyHtml(htmlContent) : htmlContent;
     fs.writeFileSync(outputHTMLPath, htmlContent, 'utf-8');
-    console.log(`HTML file saved at: ${outputHTMLPath}`);
   }
 
   private static minifyHtml(htmlContent: string): string {

@@ -67,7 +67,8 @@ describe('HtmlGenerator', () => {
         heading: 'Automation Test Heading',
         onlySummary: false,
         noLogs: false,
-        projectLogoSrc: undefined
+        projectLogoSrc: undefined,
+        branchName: undefined
       };
 
       const generatedHtml = await HtmlGenerator.generateWebHtml(

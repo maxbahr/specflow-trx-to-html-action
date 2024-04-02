@@ -21,6 +21,7 @@ export async function run(): Promise<void> {
     const noLogs = core.getInput('noLogs').toLowerCase() === 'true' || false;
     const projectLogoSrc = core.getInput('projectLogoSrc') || undefined;
     const outputHtmlEmailPath = core.getInput('outputHtmlEmailPath') || undefined;
+    const branchName = core.getInput('branchName') || undefined;
 
     const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath);
     const isAttachmentPathSet = attachmentDirPath !== undefined && attachmentDirPath !== null;
@@ -39,7 +40,8 @@ export async function run(): Promise<void> {
       heading: reportTitle,
       onlySummary,
       noLogs,
-      projectLogoSrc
+      projectLogoSrc,
+      branchName
     };
     const htmlContent = await HtmlGenerator.generateWebHtml(
       summaryResult,

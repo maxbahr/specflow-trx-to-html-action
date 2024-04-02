@@ -506,6 +506,16 @@ export async function getWebHtmlTemplate(parameters: IHtmlGeneratorParameters): 
           : ''
       }
     </div>
+    ${
+      parameters.branchName && parameters.branchName.length > 0
+        ? `<div class="row">
+        <div>
+          <span style="font-size: 9px; letter-spacing: 2px;">BRANCH: </span>
+          <span class="fw-bold" style="color: #32a1ea">${parameters.branchName}</span>
+        </div>
+      </div>`
+        : ''
+    }
     ${htmlExecutionSummary}
     ${htmlDomainTestSummary}
     ${parameters.onlySummary ? '' : htmlTestResults}
