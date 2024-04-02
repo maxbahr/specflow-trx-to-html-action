@@ -12,6 +12,15 @@ export class AttachmentFilesBase64 {
       return tests;
     }
 
+    console.log('--------Found file paths--------------');
+    console.log(`Path seperator: ${path.sep}`);
+    for (const filePath of filePaths) {
+      console.log('-----------------------------');
+      console.log(filePath);
+      console.log(path.normalize(filePath));
+    }
+    console.log('--------Found file paths--(End)-------');
+
     for (const test of tests) {
       const gherkinAttachments = test.gherkinLogs
         ?.filter(a => a.attachments && a.attachments.length > 0)
@@ -22,6 +31,7 @@ export class AttachmentFilesBase64 {
         for (const gherkinFilePath of gherkinAttachments) {
           if (gherkinFilePath) {
             console.log(`>>> GherkinPath: ${gherkinFilePath}`);
+            console.log(`### NormGherkinPath: ${path.normalize(gherkinFilePath)}`);
             const filePath = filePaths.find(f => this.pathsMatch(f, gherkinFilePath));
             if (filePath) {
               console.log(`FilePath: ${filePath}`);
