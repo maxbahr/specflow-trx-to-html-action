@@ -12,6 +12,23 @@ const htmlHeader = `<head>
         margin: 1rem;
       }
   
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); /* Przezroczysty biały tło */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* Wyżej niż inne elementy */
+      }
+
+      .loading-text {
+        font-size: 24px;
+      }
+
       .table {
         --bs-table-border-color: #ecf0f3;
         vertical-align: middle;
@@ -488,6 +505,16 @@ const htmlScriptsTestResults = `<script>
         });
       }
 
+    </script>
+    <script>
+      function scrollToFilter(domain) {
+        if(domain.trim() !== '') {
+          var domainFilter = document.getElementById("inputGroupSelectDomain");          
+          domainFilter.value = domain;
+          domainFilter.dispatchEvent(new Event('change'));
+          domainFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     </script>`;
 
 export async function getWebHtmlTemplate(parameters: IHtmlGeneratorParameters): Promise<string> {
@@ -495,7 +522,18 @@ export async function getWebHtmlTemplate(parameters: IHtmlGeneratorParameters): 
   <html lang="en">
   ${htmlHeader}
   <body>
-  <div class="container">
+  <!-- Div loading -->
+  <div class="loading" id="loading">
+    <div class="loading-text">Loading...</div>
+  </div>
+  <script>
+    window.addEventListener('load', function() {
+      document.getElementById('loading').style.display = 'none';    
+      document.getElementById('content').style.display = 'block';    
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
+  </script>
+  <div id="content" class="container" style="display: none;">
     <div class="row">
       <div class="col-10 d-flex align-items-center"><h1>##report_title_h1##</h1></div>
       ${

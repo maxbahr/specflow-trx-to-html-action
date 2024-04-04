@@ -130,7 +130,7 @@ export class HtmlWebComponent {
         `;
 
     return `
-        <div class="progress" style="height: 20px;" id="progress-${data.domain.toLowerCase()}" data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top" title="${tooltipTitle}">
+        <div class="progress" style="height: 20px;" id="progress-${data.domain.toLowerCase()}" data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top" title="${tooltipTitle}" onclick="scrollToFilter('${data.domain}')">
           <div class="progress-bar progressbar-passed" role="progressbar" style="width: ${passed}%" aria-valuenow="${passed}" aria-valuemin="0" aria-valuemax="100"><span class="progressbar-label">${showLabel ? data.passed : ''}</span></div>
           <div class="progress-bar progressbar-failed" role="progressbar" style="width: ${failed}%" aria-valuenow="${failed}" aria-valuemin="0" aria-valuemax="100"><span class="progressbar-label">${showLabel ? data.failed : ''}</span></div>
           <div class="progress-bar progressbar-ignored" role="progressbar" style="width: ${ignored}%" aria-valuenow="${ignored}" aria-valuemin="0" aria-valuemax="100"><span class="progressbar-label">${showLabel ? data.ignored : ''}</span></div>
