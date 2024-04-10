@@ -33,6 +33,7 @@ export function calculatePercentage(part: number, total: number): number {
   return parseFloat(percentage.toFixed(1));
 }
 
+export const dateTimeFormat24 = 'YYYY-MM-DD HH:mm:ss';
 export const iconTotal = '🧾';
 export const iconPassed = '✅';
 export const iconFailed = '❌';

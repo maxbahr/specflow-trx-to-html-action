@@ -1,7 +1,16 @@
 import moment from 'moment';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
-import { calculatePercentage, formatTime, iconFailed, iconIgnored, iconPassed, iconRerun, iconTotal } from './utils';
+import {
+  calculatePercentage,
+  dateTimeFormat24,
+  formatTime,
+  iconFailed,
+  iconIgnored,
+  iconPassed,
+  iconRerun,
+  iconTotal
+} from './utils';
 import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
 
 export class HtmlMailComponent {
@@ -21,8 +30,8 @@ export class HtmlMailComponent {
 
   static summaryDuration(summaryResult: ISummaryResult): string {
     return `<tr>
-        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">start time: </span><span>${moment(summaryResult.startDate).format('YYYY-MM-DD hh:mm:ss')}</span></td>
-        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">end time: </span><span>${moment(summaryResult.endDate).format('YYYY-MM-DD hh:mm:ss')}</span></td>
+        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">start time: </span><span>${moment(summaryResult.startDate).format(dateTimeFormat24)}</span></td>
+        <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">end time: </span><span>${moment(summaryResult.endDate).format(dateTimeFormat24)}</span></td>
         <td style="padding: 0px 10px; font-size: 16px;"><span style="font-size: 12px;">duration: </span><span>${formatTime(summaryResult.duration)}</span></td>
     </tr>`;
   }

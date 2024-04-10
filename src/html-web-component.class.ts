@@ -5,6 +5,7 @@ import { IUnitTestResult } from './interfaces/unit-test-result.type';
 import _ from 'lodash';
 import {
   calculatePercentage,
+  dateTimeFormat24,
   formatTime,
   iconFailed,
   iconIgnored,
@@ -32,8 +33,8 @@ export class HtmlWebComponent {
         <div class="col text-center">${this.returnTestProgress(summaryResult, false)}</div>
        </div>
        <div class="row align-items-center row-summary">
-        <div class="col text-center fs-5"><span class="fs-6">start time: </span><span>${moment(summaryResult.startDate).format('YYYY-MM-DD hh:mm:ss')}</span></div>
-        <div class="col text-center fs-5"><span class="fs-6">end time: </span><span>${moment(summaryResult.endDate).format('YYYY-MM-DD hh:mm:ss')}</span></div>
+        <div class="col text-center fs-5"><span class="fs-6">start time: </span><span>${moment(summaryResult.startDate).format(dateTimeFormat24)}</span></div>
+        <div class="col text-center fs-5"><span class="fs-6">end time: </span><span>${moment(summaryResult.endDate).format(dateTimeFormat24)}</span></div>
         <div class="col text-center fs-5"><span class="fs-6">duration: </span><span>${formatTime(summaryResult.duration)}</span></div>
        </div>
       `;
@@ -53,8 +54,8 @@ export class HtmlWebComponent {
 
   static testResultComponent(result: IUnitTestResult, iterator: number, noLogs: boolean): string {
     const duration = formatTime(result.duration);
-    const startTime = moment(result.startTime).format('YYYY-MM-DD hh:mm:ss');
-    const endTime = moment(result.endTime).format('YYYY-MM-DD hh:mm:ss');
+    const startTime = moment(result.startTime).format(dateTimeFormat24);
+    const endTime = moment(result.endTime).format(dateTimeFormat24);
     const outcome = this.returnIconByStatus(result.outcome);
     const preOutcome = result.previousRun?.outcome ? this.returnIconByStatus(result.previousRun?.outcome) : undefined;
 
