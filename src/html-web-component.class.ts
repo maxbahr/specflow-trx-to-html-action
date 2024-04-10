@@ -191,13 +191,19 @@ export class HtmlWebComponent {
 
     for (const attachment of attachments) {
       const src = attachment.base64Data.startsWith(prefix) ? attachment.base64Data : prefix + attachment.base64Data;
-      attachment.fileType.startsWith('image')
-        ? (text += `<li>
+      if (attachment.fileType.startsWith('image')) {
+        text += `<li>
           <img src="${src}" alt="${attachment.fileName}">
-          </li>`)
-        : (text += `<li>
+          </li>`;
+      } else if (attachment.fileType.startsWith('video')) {
+        text += `<li>
+        <video controls class="player-video"><source id="video-source" type="video/mp4" src="data:video/mp4;base64,${attachment.base64Data}"></video>
+        </li>`;
+      } else {
+        text += `<li>
           Download file: <a href="data:application/octet-stream;base64,${attachment.base64Data}" download="${attachment.fileName}">${attachment.fileName}</a>
-          </li>`);
+          </li>`;
+      }
     }
 
     if (text.length > 0) {

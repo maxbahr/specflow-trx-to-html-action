@@ -236,6 +236,11 @@ const htmlHeader = `<head>
         border-radius: 15px;
         margin-left: 40px;
       }
+
+      .player-video {
+        width: 800px;
+        border: 1px solid #ecf0f3;
+      }
   
     </style>
   </head>`;
