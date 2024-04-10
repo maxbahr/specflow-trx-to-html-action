@@ -238,7 +238,8 @@ const htmlHeader = `<head>
       }
 
       .player-video {
-        width: 800px;
+        max-width: 70%;
+        max-height: 70%;
         border: 1px solid #ecf0f3;
       }
   
