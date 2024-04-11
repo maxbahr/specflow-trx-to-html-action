@@ -237,9 +237,9 @@ const htmlHeader = `<head>
         margin-left: 40px;
       }
 
-      .player-video {
-        max-width: 70%;
-        max-height: 70%;
+      .screenshot, .player-video {
+        max-width: 80%;
+        max-height: 80%;
         border: 1px solid #ecf0f3;
       }
   

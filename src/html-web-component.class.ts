@@ -194,7 +194,7 @@ export class HtmlWebComponent {
       const src = attachment.base64Data.startsWith(prefix) ? attachment.base64Data : prefix + attachment.base64Data;
       if (attachment.fileType.startsWith('image')) {
         text += `<li>
-          <img src="${src}" alt="${attachment.fileName}">
+          <img class="screenshot" src="${src}" alt="${attachment.fileName}">
           </li>`;
       } else if (attachment.fileType.startsWith('video')) {
         text += `<li>
