@@ -73,7 +73,7 @@ attachments associated with the test results.
 
 - **downloadUrl**:
 
-  - _Description:_ Specifies the dowload url to display in email template.
+  - _Description:_ Specifies the dowload URL to display in email template.
   - _Required:_ No
   - _Default:_ 'undefined'
 
