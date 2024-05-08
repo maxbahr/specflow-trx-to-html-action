@@ -77,6 +77,18 @@ attachments associated with the test results.
   - _Required:_ No
   - _Default:_ 'undefined'
 
+- **workItemPrefix**:
+
+  - _Description:_ Specifies the prefix used as tag for linking with requirements
+  - _Required:_ No
+  - _Default:_ 'undefined'
+
+- **workItemUrl**:
+
+  - _Description:_ Specifies the URL used as link for opening requirements from another location
+  - _Required:_ No
+  - _Default:_ 'undefined'
+
 ## Usage
 
 ```yaml

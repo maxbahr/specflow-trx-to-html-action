@@ -60,7 +60,7 @@ inputs:
     default: 'undefined'
 
   downloadUrl:
-    description: Specifies the download url to display in email template
+    description: Specifies the download URL to display in email template
     required: false
     default: 'undefined'
 
@@ -71,7 +71,7 @@ inputs:
 
   workItemUrl:
     description:
-      Specifies the url used as link for opening requirements from another location, eg.
+      Specifies the URL used as link for opening requirements from another location, eg.
       https://project.visualstudio.com/project/_workitems/edit/{id}
     required: false
     default: 'undefined'
