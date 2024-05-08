@@ -204,6 +204,32 @@ describe('action', () => {
     expect(errorMock).not.toHaveBeenCalled();
   });
 
+  it('should generate with branch name and downolad url', async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'trxDirPath':
+          return '__tests__/trx';
+        case 'outputHtmlPath':
+          return 'output/results.html';
+        case 'outputHtmlEmailPath':
+          return 'output/email-body-results.html';
+        case 'branchName':
+          return 'mba/this-is-my-branch-name';
+        case 'downloadUrl':
+          return 'https://github.com/Watts-Digital/nexa-automation-tests/actions/runs/8999309346/artifacts/1483487476';
+        default:
+          return '';
+      }
+    });
+
+    await main.run();
+    expect(runMock).toHaveReturned();
+
+    // Verify that all of the core library functions were called correctly
+    expect(errorMock).not.toHaveBeenCalled();
+  });
+
   it.skip('sets a failed status', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {

@@ -70,6 +70,19 @@ export class HtmlMailComponent {
     }`;
   }
 
+  static async downloadUrl(parameters: IHtmlGeneratorParameters): Promise<string> {
+    return `${
+      parameters.branchName && parameters.branchName.length > 0
+        ? `<tr>
+              <td colspan="2">
+                  <span style="font-size: 9px; letter-spacing: 2px;">DOWNLOAD: </span>
+                  <span><a class="fw-bold" style="color: #32a1ea" href="${parameters.downloadUrl}">test execution report</a></span>
+              </td>
+          </tr>`
+        : ''
+    }`;
+  }
+
   private static returnTestProgress(data: ISummaryResult): string {
     const passed = calculatePercentage(data.passed, data.total);
     const failed = calculatePercentage(data.failed, data.total);

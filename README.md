@@ -71,6 +71,12 @@ attachments associated with the test results.
   - _Required:_ No
   - _Default:_ 'undefined'
 
+- **downloadUrl**:
+
+  - _Description:_ Specifies the dowload url to display in email template.
+  - _Required:_ No
+  - _Default:_ 'undefined'
+
 ## Usage
 
 ```yaml

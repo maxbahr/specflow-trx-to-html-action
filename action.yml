@@ -59,6 +59,11 @@ inputs:
     required: false
     default: 'undefined'
 
+  downloadUrl:
+    description: Specifies the download url to display in email template
+    required: false
+    default: 'undefined'
+
 runs:
   using: node20
   main: dist/index.js

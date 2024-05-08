@@ -74,6 +74,7 @@ export class HtmlGenerator {
     htmlContent = htmlContent.replace('##report_title_h1##', htmlParameters.title);
     htmlContent = htmlContent.replace('##project_logo##', await HtmlMailComponent.projectLogo(htmlParameters));
     htmlContent = htmlContent.replace('##branch_name##', await HtmlMailComponent.branchName(htmlParameters));
+    htmlContent = htmlContent.replace('##download_url##', await HtmlMailComponent.downloadUrl(htmlParameters));
     htmlContent = htmlContent.replace('##summary_numbers##', HtmlMailComponent.summaryNumbers(summaryResult, results));
     htmlContent = htmlContent.replace('##summary_percentage##', HtmlMailComponent.summaryPercentage(summaryResult));
     htmlContent = htmlContent.replace('##summary_duration##', HtmlMailComponent.summaryDuration(summaryResult));

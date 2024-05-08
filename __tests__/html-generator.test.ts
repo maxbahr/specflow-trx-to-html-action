@@ -68,7 +68,8 @@ describe('HtmlGenerator', () => {
         onlySummary: false,
         noLogs: false,
         projectLogoSrc: undefined,
-        branchName: undefined
+        branchName: undefined,
+        downloadUrl: undefined
       };
 
       const generatedHtml = await HtmlGenerator.generateWebHtml(
