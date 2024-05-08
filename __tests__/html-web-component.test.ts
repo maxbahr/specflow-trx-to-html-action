@@ -29,7 +29,17 @@ describe('HtmlWebComponent', () => {
       const result: IUnitTestResult = mockUnitTestResult;
       const iterator = 1;
 
-      const htmlString = HtmlWebComponent.testResultComponent(result, iterator, false);
+      const htmlString = HtmlWebComponent.testResultComponent(result, iterator, {
+        noLogs: false,
+        title: '',
+        heading: '',
+        onlySummary: false,
+        projectLogoSrc: undefined,
+        branchName: undefined,
+        downloadUrl: undefined,
+        reqPrefix: undefined,
+        reqUrl: undefined
+      });
 
       expect(htmlString).toContain('<tr class="table-row"');
     });

@@ -217,7 +217,11 @@ describe('action', () => {
         case 'branchName':
           return 'mba/this-is-my-branch-name';
         case 'downloadUrl':
-          return 'https://github.com/Watts-Digital/nexa-automation-tests/actions/runs/8999309346/artifacts/1483487476';
+          return 'https://github.com/actions/runs/8999309346/artifacts/1483487476';
+        case 'workItemPrefix':
+          return 'TC-';
+        case 'workItemUrl':
+          return 'https://github.com/actions/runs/8999309346/artifacts/{id}';
         default:
           return '';
       }

@@ -14,6 +14,7 @@ import {
   iconTotal,
   truncateText
 } from './utils';
+import { IHtmlGeneratorParameters } from './interfaces/html-generator-param.type';
 
 export class HtmlWebComponent {
   static summaryTableComponent(summaryResult: ISummaryResult, results: IUnitTestResult[]): string {
@@ -52,7 +53,11 @@ export class HtmlWebComponent {
         </tr>`;
   }
 
-  static testResultComponent(result: IUnitTestResult, iterator: number, noLogs: boolean): string {
+  static testResultComponent(
+    result: IUnitTestResult,
+    iterator: number,
+    htmlParameters: IHtmlGeneratorParameters
+  ): string {
     const duration = formatTime(result.duration);
     const startTime = moment(result.startTime).format(dateTimeFormat24);
     const endTime = moment(result.endTime).format(dateTimeFormat24);
@@ -62,6 +67,7 @@ export class HtmlWebComponent {
     const errMsg = _.escape(result.errMsg || '');
     const title = _.escape(result.testName || '');
     const params = _.escape(result.testParameters || '');
+    const testReq = _.escape(result.testRequirementsIds || '');
 
     return `<tr class="table-row"
               data-bs-toggle="modal" 
@@ -71,12 +77,13 @@ export class HtmlWebComponent {
               data-bs-rerun='${result.rerun}' 
               data-bs-title='${title}' 
               data-bs-params='${params}'
+              data-bs-testreq='${_.escape(this.getReqLinksComponent(testReq, htmlParameters))}'
               data-bs-start='${startTime}' 
               data-bs-end='${endTime}' 
               data-bs-duration='${duration}' 
               data-bs-domain='${result.testDomain}' 
               data-bs-feature='${result.featureName}' 
-              data-bs-content-html="${this.returnStepComponent(result, noLogs)}">
+              data-bs-content-html="${this.returnStepComponent(result, htmlParameters.noLogs)}">
           <td class="align-middle text-center small">${iterator}</td>
           <td class="align-middle text-center"><span class="icon">${preOutcome ? preOutcome : ''} ${result.rerun ? iconRerun : ''} ${outcome} </span></td>
           <td class="align-middle col-7">
@@ -86,6 +93,7 @@ export class HtmlWebComponent {
               </div>
               <div class="test-title">${title}</div>
               <div class="test-params">${params}</div>
+              <div class="test-req">${testReq}</div>
           </td>
           <td class="align-middle text-nowrap small">${duration}</td>
           <td class="align-middle col-5 small">${this.returnTableErrorComponent(result, errMsg)}</td>
@@ -223,5 +231,37 @@ export class HtmlWebComponent {
     if (status === 'done') return 'green';
     if (status === 'error') return 'red';
     return 'grey';
+  }
+
+  private static extractReqIds(prefix: string, input: string): string[] {
+    const regex = new RegExp(`${prefix}(\\d+)`, 'g');
+    const matches: RegExpMatchArray | null = input.match(regex);
+    if (matches === null) {
+      return [];
+    }
+    const ids: string[] = matches.flatMap(match => match.slice(prefix.length));
+    return ids;
+  }
+
+  private static getReqLinksComponent(testReq: string, htmlParameters: IHtmlGeneratorParameters): string {
+    if (
+      testReq === undefined ||
+      testReq === '' ||
+      htmlParameters.reqPrefix === undefined ||
+      htmlParameters.reqUrl === undefined
+    ) {
+      return '';
+    }
+
+    const prefix = htmlParameters.reqPrefix;
+    const url = htmlParameters.reqUrl;
+    const ids = this.extractReqIds(prefix, testReq);
+    let component = '';
+    for (const id of ids) {
+      const href = `${url.replace('{id}', id)}`;
+      component += `<a href='${href}'>${prefix}${id}</a>&nbsp;&nbsp;`;
+    }
+
+    return component;
   }
 }

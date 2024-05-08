@@ -38,7 +38,7 @@ export class HtmlGenerator {
 
     //Test Results
     for (const result of results) {
-      testTableContent += HtmlWebComponent.testResultComponent(result, ++iterator, htmlParameters.noLogs);
+      testTableContent += HtmlWebComponent.testResultComponent(result, ++iterator, htmlParameters);
     }
 
     //replace placeholders

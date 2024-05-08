@@ -64,6 +64,18 @@ inputs:
     required: false
     default: 'undefined'
 
+  workItemPrefix:
+    description: Specifies the prefix used as tag for linking with requirements, eg. TC-
+    required: false
+    default: 'undefined'
+
+  workItemUrl:
+    description:
+      Specifies the url used as link for opening requirements from another location, eg.
+      https://project.visualstudio.com/project/_workitems/edit/{id}
+    required: false
+    default: 'undefined'
+
 runs:
   using: node20
   main: dist/index.js

@@ -76,7 +76,8 @@ export class TrxParser {
                 stdout: output,
                 gherkinLogs: GherkinLogs.parseGherkinLogs(output),
                 errMsg: err,
-                rerun: false
+                rerun: false,
+                testRequirementsIds: this.getStdoutPlaceholderValue(output, 'Report_Req_Ids: ')
               });
             }
           }
@@ -85,6 +86,18 @@ export class TrxParser {
         });
       });
     });
+  }
+
+  private static getStdoutPlaceholderValue(output: string, placeholder: string): string | undefined {
+    const regex = new RegExp(`${placeholder}(.*)`);
+
+    const match: RegExpExecArray | null = regex.exec(output);
+
+    if (match !== null) {
+      return match[1];
+    } else {
+      return undefined;
+    }
   }
 
   private static convertTimeToSeconds(timeString: string): number {

@@ -23,6 +23,8 @@ export async function run(): Promise<void> {
     const outputHtmlEmailPath = core.getInput('outputHtmlEmailPath') || undefined;
     const branchName = core.getInput('branchName') || undefined;
     const downloadUrl = core.getInput('downloadUrl') || undefined;
+    const reqPrefix = core.getInput('workItemPrefix') || undefined;
+    const reqUrl = core.getInput('workItemUrl') || undefined;
 
     const trxFiles = await FileUtils.findTrxFilesAsync(trxDirPath);
     const isAttachmentPathSet = attachmentDirPath !== undefined && attachmentDirPath !== null;
@@ -43,7 +45,9 @@ export async function run(): Promise<void> {
       noLogs,
       projectLogoSrc,
       branchName,
-      downloadUrl
+      downloadUrl,
+      reqPrefix,
+      reqUrl
     };
     const htmlContent = await HtmlGenerator.generateWebHtml(
       summaryResult,

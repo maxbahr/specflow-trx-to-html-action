@@ -54,20 +54,15 @@ const htmlHeader = `<head>
         justify-content: space-between;
       }
   
-      .modal-dates, .modal-metadata {
+      .modal-dates, .modal-metadata, .model-test-testreq-label {
         font-size: small;
         color: #858585;
       }
   
       .modal-start-time, .modal-end-time, .modal-duration,
-      .modal-domain, .modal-feature {
+      .modal-domain, .modal-feature, .model-test-testreq {
         font-size: 11pt;
         color: black;
-      }
-  
-      .model-test-params {
-        font-size: large;
-        font-style: italic;
       }
   
       .attachments-heading {
@@ -107,6 +102,12 @@ const htmlHeader = `<head>
   
       .row.test-metadata .value {
         color: dimgrey;
+      }
+
+      .test-req {
+        margin-top: 3px;
+        color: dimgrey;
+        font-size: smaller;
       }
   
       .test-title {
@@ -315,8 +316,8 @@ const htmlTestResults = `<div class="container pt-3">
           <div class="row">
             <div class="col-8">
               <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupText">Search by Title</label>
-                <input type="text" class="form-control" id="inputGroupText" aria-label="Search by text">
+                <label class="input-group-text" for="inputGroupText">Search by text</label>
+                <input type="text" class="form-control" id="inputGroupText" aria-label="Search by text" placeholder="Enter test name or requirements">
               </div>
             </div>  
             <div class="col">
@@ -374,6 +375,7 @@ const htmlScriptsBootstrap = `<script src="https://cdn.jsdelivr.net/npm/bootstra
   });
 </script>
 `;
+
 const htmlScriptsTestResults = `<script>
       const exampleModal = document.getElementById('modal-test-results')
       exampleModal.addEventListener('show.bs.modal', event => {
@@ -384,6 +386,7 @@ const htmlScriptsTestResults = `<script>
         const outcome = button.getAttribute('data-bs-icon-outcome');
         const title = button.getAttribute('data-bs-title');
         const params = button.getAttribute('data-bs-params');
+        const testreq = button.getAttribute('data-bs-testreq');
         const domain = button.getAttribute('data-bs-domain');
         const feature = button.getAttribute('data-bs-feature');
         const content = button.getAttribute('data-bs-content');
@@ -397,6 +400,7 @@ const htmlScriptsTestResults = `<script>
         }
   
         const paramsComponent = (!params || params.trim() === '') ? '' : \`<span class="model-test-params">\${params}</span><br/>\`;
+        const testreqComponent = (!testreq || testreq.trim() === '') ? '' : \`<br/><span class="model-test-testreq-label">requirements: </span><span class="model-test-testreq">\${testreq}</span>\`;
         const testMetadata = \`<span class='modal-metadata'>
               domain:&nbsp;<span class="modal-domain">\${domain}</span>&nbsp;&nbsp;
               feature:&nbsp;<span class="modal-feature">\${feature}</span>&nbsp;&nbsp;
@@ -411,6 +415,7 @@ const htmlScriptsTestResults = `<script>
             \${paramsComponent}
             \${testMetadata}
             \${dateTimeDuration}
+            \${testreqComponent}
         \`;
         
         //reset toggle
@@ -465,12 +470,13 @@ const htmlScriptsTestResults = `<script>
             tableRows.forEach(row => {
                 const domainValue = row.getAttribute('data-bs-domain').toLowerCase();
                 const featureValue = row.getAttribute('data-bs-feature').toLowerCase();
-                const textValue = row.getAttribute('data-bs-title').toLowerCase();
+                const titleValue = row.getAttribute('data-bs-title').toLowerCase();
+                const testreqValue = row.getAttribute('data-bs-testreq').toLowerCase();
                 const statusValue = row.getAttribute('data-bs-outcome').toLowerCase();
                 const rerunValue = (row.getAttribute('data-bs-rerun') === 'true');
                 const domainMatch = selectedDomain === 'choose...' || domainValue === selectedDomain;
                 const featureMatch = selectedFeature === 'choose...' || featureValue === selectedFeature;
-                const textMatch = textValue.includes(searchKeyword);
+                const textMatch = titleValue.includes(searchKeyword) || testreqValue.includes(searchKeyword);
                 const passedMatch = passedChecked && statusValue === 'passed';
                 const failedMatch = failedChecked && statusValue === 'failed';
                 const ignoredMatch = ignoredChecked && statusValue === 'ignored';

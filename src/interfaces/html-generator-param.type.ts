@@ -6,4 +6,6 @@ export interface IHtmlGeneratorParameters {
   projectLogoSrc: string | undefined;
   branchName: string | undefined;
   downloadUrl: string | undefined;
+  reqPrefix: string | undefined;
+  reqUrl: string | undefined;
 }
