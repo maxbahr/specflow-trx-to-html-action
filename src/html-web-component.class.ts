@@ -259,7 +259,7 @@ export class HtmlWebComponent {
     let component = '';
     for (const id of ids) {
       const href = `${url.replace('{id}', id)}`;
-      component += `<a href='${href}'>${prefix}${id}</a>&nbsp;&nbsp;`;
+      component += `<a target='_blank' href='${href}'>${prefix}${id}</a>&nbsp;&nbsp;`;
     }
 
     return component;

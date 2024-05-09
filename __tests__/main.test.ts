@@ -221,7 +221,7 @@ describe('action', () => {
         case 'workItemPrefix':
           return 'TC-';
         case 'workItemUrl':
-          return 'https://github.com/actions/runs/8999309346/artifacts/{id}';
+          return 'https://github.com/actions/runs/8999309346/requirement/{id}/';
         default:
           return '';
       }

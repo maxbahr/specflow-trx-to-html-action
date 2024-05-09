@@ -7,7 +7,8 @@
   <Results>
     <UnitTestResult executionId="c6e04a0d-a356-48c0-831e-bf9ae4d0649b" testId="f3f5623c-d2b4-b906-907c-16405bc94284" testName="Sign Up" computerName="runner" duration="00:03:21.5568664" startTime="2024-03-12T05:16:45.6765826+00:00" endTime="2024-03-12T05:16:45.6765829+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c6e04a0d-a356-48c0-831e-bf9ae4d0649b">
       <Output>
-        <StdOut>-&gt; Screen Resolution: 1920 x 1080
+        <StdOut>-&gt; Report_Req_Ids: TC-21808, TC-18024, TC-19803, TC-17729
+-&gt; Screen Resolution: 1920 x 1080
 Given application is open
 -&gt; DRIVER: Navigated to https://app.com/
 -&gt; Application successfully launched

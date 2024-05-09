@@ -79,7 +79,8 @@ attachments associated with the test results.
 
 - **workItemPrefix**:
 
-  - _Description:_ Specifies the prefix used as tag for linking with requirements
+  - _Description:_ Specifies the prefix used as tag for linking with requirements. It is used with `Report_Req_Ids`
+    placeholder in logs
   - _Required:_ No
   - _Default:_ 'undefined'
 
@@ -256,3 +257,16 @@ Features
 
 If there are two .trx files with the same test scenario and domain name, then this scenario would be marked as 🔄 rerun.
 The error message from the first test is displayed in the row of the test results grid.
+
+## Placeholders
+
+Report support some placeholders that when script finds them use their value in the report
+
+### Report_Req_Ids
+
+`Report_Req_Ids` is used to show requirement's referances in report. Use action variables `workItemPrefix` and
+`workItemUrl` to link with requirements by URL
+
+```log
+-> Report_Req_Ids: TC-21808, TC-18024, TC-19803, TC-17729
+```
