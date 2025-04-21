@@ -83,7 +83,7 @@
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.7",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.12.12",
+    "@types/node": "^22.14.1",
     "@types/node-fetch": "^2.6.11",
     "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
