@@ -73,7 +73,7 @@
     "html-minifier": "^4.0.0",
     "jimp": "^0.22.12",
     "lodash": "^4.17.21",
-    "mime-types": "^2.1.35",
+    "mime-types": "^3.0.1",
     "moment": "^2.30.1",
     "sharp": "^0.33.5",
     "xml2js": "^0.6.2"
