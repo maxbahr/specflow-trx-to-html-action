@@ -1,6 +1,4 @@
 import * as fs from 'fs';
-import { minify } from 'html-minifier-terser';
-import type { Options } from 'html-minifier-terser';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { FileUtils } from './fs-utils.class';
@@ -91,13 +89,13 @@ export class HtmlGenerator {
   }
 
   private static async minifyHtml(htmlContent: string): Promise<string> {
-    const options: Options = {
+    const { minify } = await import('html-minifier-terser');
+    return await minify(htmlContent, {
       collapseWhitespace: true,
       removeComments: true,
       minifyCSS: true,
       minifyJS: true,
       minifyURLs: true
-    };
-    return await minify(htmlContent, options);
+    });
   }
 }

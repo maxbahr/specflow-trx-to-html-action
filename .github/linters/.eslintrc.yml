@@ -34,6 +34,13 @@ extends:
   - plugin:github/recommended
   - plugin:jest/recommended
 
+overrides:
+  - files: ['**/*.ts', '**/*.tsx']
+    rules:
+      n/no-missing-import: 'off'
+      import/no-unresolved: 'off'
+      import/named: 'off'
+
 rules: {
     'camelcase': 'off',
     'eslint-comments/no-use': 'off',
