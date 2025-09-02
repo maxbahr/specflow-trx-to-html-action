@@ -22,6 +22,7 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        persist-credentials: false
         with:
           fetch-depth: 0
 
@@ -38,7 +39,7 @@ jobs:
 
       - name: Lint Codebase
         id: super-linter
-        uses: super-linter/super-linter/slim@v8
+        uses: super-linter/super-linter/slim@ffde3b2b33b745cb612d787f669ef9442b1339a6
         env:
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: dist/**/*
