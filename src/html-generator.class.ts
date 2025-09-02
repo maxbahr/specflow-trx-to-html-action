@@ -1,5 +1,6 @@
 import * as fs from 'fs';
-import { Options, minify } from 'html-minifier';
+import { minify } from 'html-minifier-terser';
+import type { Options } from 'html-minifier-terser';
 import { IUnitTestResult } from './interfaces/unit-test-result.type';
 import { ISummaryResult } from './interfaces/summary-result.type';
 import { FileUtils } from './fs-utils.class';
@@ -83,13 +84,13 @@ export class HtmlGenerator {
     return htmlContent;
   }
 
-  static saveHtml(outputHTMLPath: string, htmlContent: string, shouldMinify: boolean): void {
+  static async saveHtml(outputHTMLPath: string, htmlContent: string, shouldMinify: boolean): Promise<void> {
     FileUtils.createDirectories(outputHTMLPath);
-    htmlContent = shouldMinify ? this.minifyHtml(htmlContent) : htmlContent;
+    htmlContent = shouldMinify ? await this.minifyHtml(htmlContent) : htmlContent;
     fs.writeFileSync(outputHTMLPath, htmlContent, 'utf-8');
   }
 
-  private static minifyHtml(htmlContent: string): string {
+  private static async minifyHtml(htmlContent: string): Promise<string> {
     const options: Options = {
       collapseWhitespace: true,
       removeComments: true,
@@ -97,6 +98,6 @@ export class HtmlGenerator {
       minifyJS: true,
       minifyURLs: true
     };
-    return minify(htmlContent, options);
+    return await minify(htmlContent, options);
   }
 }

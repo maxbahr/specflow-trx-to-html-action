@@ -90,7 +90,7 @@ describe('HtmlGenerator', () => {
   });
 
   describe('saveHtml', () => {
-    test.skip('should save HTML content correctly', () => {
+    test.skip('should save HTML content correctly', async () => {
       const outputHTMLPath = 'sample/output.html';
       const htmlContent = '<html><body><h1>Hello, World!</h1></body></html>';
       const shouldMinify = false; // For testing purposes, set to true if you want to test minification
@@ -102,7 +102,7 @@ describe('HtmlGenerator', () => {
       //   const writeFileSyncMock = jest.spyOn(fs, 'writeFileSync');
       //   writeFileSyncMock.mockImplementation();
 
-      HtmlGenerator.saveHtml(outputHTMLPath, htmlContent, shouldMinify);
+      await HtmlGenerator.saveHtml(outputHTMLPath, htmlContent, shouldMinify);
 
       //   expect(createDirectoriesMock).toHaveBeenCalledWith(outputHTMLPath);
       //   expect(writeFileSyncMock).toHaveBeenCalledWith(outputHTMLPath, htmlContent, 'utf-8');

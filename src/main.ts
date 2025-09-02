@@ -55,7 +55,7 @@ export async function run(): Promise<void> {
       unitTestResults,
       htmlParameters
     );
-    HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
+    await HtmlGenerator.saveHtml(outputHtmlPath, htmlContent, false);
 
     //email html
     const isOutputHtmlEmailPathSet = outputHtmlEmailPath !== undefined && outputHtmlEmailPath !== null;
@@ -66,7 +66,7 @@ export async function run(): Promise<void> {
         unitTestResults,
         htmlParameters
       );
-      HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlMailContent, false);
+      await HtmlGenerator.saveHtml(outputHtmlEmailPath, htmlMailContent, false);
     }
   } catch (error) {
     // Fail the workflow run if an error occurs
